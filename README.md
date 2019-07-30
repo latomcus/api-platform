@@ -1,4 +1,4 @@
-# api-platform
+# REST API Platform (pre-alpha)
 API Platform is a web framework to easily create and maintain API-first projects with flexibility and quick turn around
 * Small code base
 * Standardized JSON response makes it easy to prototype and build web applications
@@ -13,7 +13,7 @@ API Platform is a web framework to easily create and maintain API-first projects
 <img src="http://.png" title="Web page to test session.create service">
 
 ## Getting Started
-Once downloaded, make sure you've configured your database and email server. All settings are in ./config.js
+Once downloaded, make sure you've configured your database and email server. All settings are in ./config.js file.
 
 ## Prerequisites
 * Node.js (v12 or higher) - https://nodejs.org
@@ -67,3 +67,9 @@ Note for ./js/api.js: styles for api[x].style could be one of the following: pri
 
 ## Author
 Created by [Samuel Khaykin](mailto:latomcus@gmail.com)
+
+### Future Enhancements
+ * Support for Postgres and MySQL
+ * Unit tests
+ * File upload API & download stream
+ * Real-time dynamic reload of custom functions (server-less style)
