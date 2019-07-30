@@ -23,8 +23,8 @@ Once downloaded, make sure you've configured your database and email server. All
 
 ## Configuration
 All configurations are in ./config.js file
-* email: tested with Gmail service. Please see steps involved to get app password: https://support.google.com/mail/answer/185833?hl=en
-* mssql: update your sql server credentials and settins as needed:
+ * `email`: tested with Gmail service. Please see steps involved to get app password: https://support.google.com/mail/answer/185833?hl=en
+ * `mssql`: update your sql server credentials and settins as needed:
 
 ```
 user: "api_user",
@@ -40,7 +40,7 @@ Open in browser: http://localhost:3000
 
 ## Data Format
 Outgoing JSON data is structured as follows:
-* code - {required} system wide unique value that easily identifies the source, or module, or condition in your code.
+ * `code` - {required} system wide unique value that easily identifies the source, or module, or condition in your code.
 Code format: [origin].[function].[condition]
 Example: 'd.aa.02' refers to database
 Codes are organized as follows:
