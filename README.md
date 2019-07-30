@@ -34,8 +34,8 @@ database: "api_database"
 ```
 
 ## Installing
-$ git clone https://github.com/latomcus/api-platform/api-platform.git
-$ npm start
+  $ git clone https://github.com/latomcus/api-platform/api-platform.git
+  $ npm start
 Open in browser: http://localhost:3000
 
 ## Data Format
@@ -66,4 +66,4 @@ Note for ./js/api.js: styles for api[x].style could be one of the following: pri
 * Notify https://notifyjs.jpillora.com
 
 ## Author
-Creted by [Samuel Khaykin](mailto:latomcus@gmail.com)
+Created by [Samuel Khaykin](mailto:latomcus@gmail.com)
