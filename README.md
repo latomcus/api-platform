@@ -24,14 +24,18 @@ Once downloaded, make sure you've configured your database and email server. All
 ## Configuration
 All configurations are in ./config.js file
  * `email`: tested with Gmail service. Please see steps to get your app password: https://support.google.com/mail/answer/185833?hl=en
+    ```
+    service: 'Gmail',
+    user: 'your-email@gmail.com',
+    password: 'app-secret-key'
+    ```
  * `mssql`: update your SQL Server settings:
-
-```
-user: "api_user",
-password: "secret",
-server: "COMPUTER2\\SQLEXPRESS",
-database: "api_database"
-```
+    ```
+    user: "api_user",
+    password: "secret",
+    server: "COMPUTER2\\SQLEXPRESS",
+    database: "api_database"
+    ```
 
 ## Installing
     $ git clone https://github.com/latomcus/api-platform.git
@@ -67,7 +71,7 @@ Note for ./js/api.js: styles for api[x].style could be one of the following: pri
 * Notify - https://notifyjs.jpillora.com
 
 ## Author
-Created by [Samuel Khaykin](mailto:latomcus@gmail.com) Contributions and feature requests are welcome!
+Created by [Samuel Khaykin](mailto:latomcus@yahoo.com) Contributions and feature requests are welcome!
 
 ### Future Enhancements
  * Support for Postgres and MySQL
