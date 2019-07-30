@@ -34,7 +34,7 @@ database: "api_database"
 ```
 
 ## Installing
-    $ git clone https://github.com/latomcus/api-platform/api-platform.git
+    $ git clone https://github.com/latomcus/api-platform.git
     $ npm start
 Open in browser: http://localhost:3000
 
