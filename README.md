@@ -10,7 +10,7 @@ API Platform is a web framework to easily create and maintain API-first projects
 * Mobile friendly GUI web interface that serves as testing tool and documentation
 
 ## Screenshots
-<img src="http://.png" title="Web page to test session.create service">
+<img src="https://raw.githubusercontent.com/latomcus/api-platform/dev/public/images/api-gui.png" title="Web page to test session.create service">
 
 ## Getting Started
 Once downloaded, make sure you've configured your database and email server. All settings are in ./config.js file.
