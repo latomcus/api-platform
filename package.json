@@ -1,0 +1,20 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "Service oriented database API platform",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "latomcus@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "mssql": "^5.1.0",
+    "nodemailer": "^6.3.0",
+    "pg": "^7.11.0"
+  }
+}

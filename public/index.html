@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name='description' content='API Platform'/>
+    <meta name='author' content='latomcus@gmail.com'/>
+    <link rel='shortcut icon' href="images/api.ico">
+    <title>API Platform</title>
+    <script src="js/jquery-3.1.0.min.js"></script>    
+    <script src="js/handlebars-v4.0.5.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/notify.min.js"></script>
+    <script src="js/api.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">   
+
+    <style>
+        body {
+            font-family: "Tahoma";
+            font-size: 90%;
+            margin: 5px;
+            /* background-color: #e2e2e2; */
+        }
+
+        html {
+            width: calc(100vw - 20px);
+        }
+
+        .btn {
+            cursor: pointer;
+        }
+
+        .btn:focus,.btn:active:focus,.btn.active:focus, .btn.focus,.btn:active.focus,.btn.active.focus,textarea,.btn {
+            outline: none !important;
+            box-shadow: none;
+        }
+
+        .inputbox {
+            -moz-appearance: textfield;
+            -webkit-appearance: textfield;
+            background-color: -moz-field;
+            border: 1px solid #a4a4a4;
+            font: -moz-field;
+            font: -webkit-small-control;
+            padding: 2px 3px;
+            width: 100%;
+            white-space: pre-wrap;
+        }
+
+       .box {
+            margin: 15px 0px 0px 0px;
+        }
+
+        .smalltitle {
+            background-color: rgba(0,0,0,.03);
+            font-size: 10pt;
+            width: 100%;
+            padding: 2px 3px;
+            margin-top: 3px;
+        }
+
+        .description {
+            margin: 4px 0px 0px 0px;
+            color: #526f7d;
+        }
+
+        .dataOut {
+            padding: 5px 5px 1px 8px;
+            min-height: 200px;
+        }
+
+        .dataOutHeaders {
+            padding: 5px 5px 1px 8px;
+            min-height: 200px;
+            width: 100%;
+            /* color: #959595;
+            background-color: #f3f3f3;
+            border: 0px;
+            font-size: smaller; */
+        }
+
+        .dataIn {
+            padding: 5px 5px 1px 8px;
+            min-height: 130px;
+        }
+
+        .sb_btn {
+            margin-bottom: 3px;
+        }
+
+        .copy {
+            float: right;
+            color: darkgray;
+            cursor: pointer;
+            margin: 0px 5px 0px 0px;
+        }
+
+        .copy:hover {
+            text-decoration: underline;
+            color: gray;
+        }
+
+        .sb_operationbox {
+            margin: 20px 15px 18px 15px;
+        }
+
+        .sb_description_box {
+            margin-left: 10px;
+        }
+
+        .sb_description {
+            color: #767676;
+        }
+
+        .error_message {
+            margin: 0px 0px 0px 12px;
+            color: #bc2f2f;
+        }
+
+        .card-text {
+            vertical-align: middle;
+        }
+
+        .list-group-item {
+            padding: 0.5rem 0.8rem;
+        }
+
+        .card-body {
+            padding: 0.5rem 0rem 0.5rem 1.5rem;
+        }
+
+        .ap_center {
+            text-align: center;
+        }
+
+        .ap_color {
+            color: #438281;
+        }
+
+        .ap_build {
+            text-align: right;
+        }
+
+        .ap_nowrap {
+            white-space: nowrap;
+        }
+
+        .fa {
+            cursor: pointer;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        .cc_oneline {
+            display: inline-block;
+            padding-right: 50px;
+        }
+
+        .cc_warning {
+            background: #f1efae;
+        }
+
+        .cc_error {
+            background: #eab2b7;
+        }
+
+        .cclog_error {
+            color: #e40000;
+        }
+
+        .input-group {
+            max-width: 370px;
+            right: 15px;
+            position: absolute;
+        }
+        .token_box{
+            background-color: #fafafa;
+            color: #79797b;
+        }
+
+        .img_platform {
+            vertical-align: initial;
+        }
+
+        .sb_execute_button{
+            margin: 6px 0px 4px 6px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="row">
+        <div class="col">
+            <h5><img class="img_platform" src="images/api.gif"> API Platform</h5>
+         </div>
+         <div class="col">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control token_box" aria-label="token" aria-describedby="basic-addon1">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary set_token" type="button" id="button-addon2" onclick="set_token_btn();">Set token</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script id="apis-domain" type="text/x-handlebars-template">
+        <div class="row">
+            <div class="col">
+            {{#each api}}
+                <div class="btn-group sb_btn">
+                    <button type='button' class="btn btn-sm btn-{{style}}" onclick="ShowApis(this);">{{domain}}</button>
+                    <button type="button" class="btn btn-sm btn-{{style}} dropdown-toggle dropdown-toggle-split"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        {{#each operations}}
+                        <button type='button' class="btn btn-sm btn-link dropdown-item" onclick="ShowApi(this);">{{title}}</button>
+                        {{/each}}
+                    </div>
+                </div>
+            {{/each}}
+            </div>
+        </div>
+    </script>
+
+    <script id="apis-operations" type="text/x-handlebars-template">
+        <div class='box'>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{domain}}</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                     {{#each operations}}
+                        <li class="list-group-item">
+                            <button type="button" class="btn btn-link" onclick="ShowApi(this);">{{title}}</button>
+                            <span class="card-text text-secondary">{{description}}</span>
+                        </li>
+                    {{/each}}
+                </ul>
+                <div class="card-footer">
+                    <small class="text-muted">{{> partial_footer}}</small>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script id="apis-template" type="text/x-handlebars-template">
+        <div class='box'>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{domain}} : {{title}}</h5>
+                    <p class="card-text text-secondary">{{description}}</p>
+                </div>
+                <div class='smalltitle'>Request
+                    <div class='copy' onclick='copy(".dataIn",this);'>copy</div>
+                </div>
+                <textarea spellcheck='false' class='inputbox dataIn'>{{ stringify dataIn }}</textarea>
+                <div class="row">
+                        <div class="col-md-12">
+                            <button type='button' class='btn btn-sm btn-dark sb_execute_button' onclick="Run(this);">Execute</button>
+                            <span class='error_message'></span>
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8">
+                        <div class='smalltitle'>Response
+                            <div class='copy' onclick='copy(".dataOut",this);'>copy</div>
+                        </div>
+                        <textarea spellcheck='false' class="inputbox dataOut"></textarea>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class='smalltitle'>Headers</div>
+                        <textarea readonly spellcheck='false' class="inputbox dataOutHeaders"></textarea>
+                    </div>
+                </div>
+
+                <div class="card-footer"><small class="text-muted">{{> partial_footer}}</small></div>
+            </div>
+        </div>
+    </script>
+
+    <script id="partial_footer" type="text/x-handlebars-template">
+        <span>&copy; Copyright {{#global 'global'}}{{year}}{{/global}}</span>, API Platform
+    </script>
+
+    <div class="row">
+        <div class="col-md-12 domain-placeholder"></div>
+    </div>
+
+    <div class="content-placeholder"></div>
+</div>
+
+<script>
+       
+    function ShowApi(api) {
+        for (var i = 0; i < context.api.length; i++) {
+            for (var j = 0; j < context.api[i].operations.length; j++) {
+                var a = context.api[i].operations[j];
+                if (a.title === api.innerText) {
+                    a = $.extend({}, a);
+                    a.domain = context.api[i].domain;
+                    var theTemplateScript = $("#apis-template").html();
+                    var theTemplate = Handlebars.compile(theTemplateScript);
+                    var theCompiledHtml = theTemplate(a);
+                    $('.content-placeholder').html(theCompiledHtml);
+                    return;
+                }
+            }
+        }
+    }
+
+    function ShowApis(api) {
+        for (var i = 0; i < context.api.length; i++) {
+            var a = context.api[i];
+            if (a.domain === api.innerText) {
+                var theTemplateScript = $("#apis-operations").html();
+                var theTemplate = Handlebars.compile(theTemplateScript);
+                var theCompiledHtml = theTemplate(a);
+                $('.content-placeholder').html(theCompiledHtml);
+                return;
+            }
+        }
+    }
+
+    //helpers
+    Handlebars.registerHelper('stringify', function (obj) {
+        return JSON.stringify(obj, null, '\t');
+    });
+
+    Handlebars.registerHelper('global', function (context, options) {
+        return options.fn({'year': (new Date()).getFullYear()});
+    });
+
+    var sourcePartial = $("#partial_footer").html();
+    Handlebars.registerPartial("partial_footer", sourcePartial);
+
+    $(function () {
+        loadAPIs();
+        //load from cookie storage
+        var t = getTokenValue('token');
+        $('.token_box').val(t);
+        set_token(t);
+    });
+
+    function loadAPIs() {
+        var theTemplateScript = $("#apis-domain").html();
+        var theTemplate = Handlebars.compile(theTemplateScript);
+
+        var theCompiledHtml = theTemplate(context);
+        $('.domain-placeholder').append(theCompiledHtml);
+    }
+
+    function Run(el) {
+        var text = $('.dataIn').val();
+
+        try {
+            var obj = JSON.parse(text);
+            $('.error_message').text('');
+        }
+        catch (ex) {
+            var er = 'The request is not in a valid JSON format';
+            $('.error_message').text(er);
+            return;
+        }
+        
+        $dataOut = $(".dataOut");
+        $dataOut.val('');
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/',
+            data: obj,
+            success: function (data, textStatus, request) {
+                $dataOut.val(JSON.stringify(data, null, '\t'));
+                $('.dataOutHeaders').val(request.getAllResponseHeaders());
+
+                if (data.code === 'd.ad.03'){ //session cookie set up
+                    var t = getTokenValue('token');
+                    $('.token_box').val(t);
+                    set_token(t);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                $dataOut.val(JSON.stringify(xhr, null, '\t'));
+                $('.error_message').text('Error: ' + thrownError);
+            }
+        });
+    }
+
+    function getTokenValue(token) {
+        var ma = document.cookie.match('(^|[^;]+)\\s*' + token + '\\s*=\\s*([^;]+)');
+        return ma ? ma.pop() : '';
+    }
+
+    function setTokenValue(name, value, days) {
+        var d = new Date;
+        d.setTime(d.getTime() + 24 * 60 * 60 * 1000 * days);
+        document.cookie = name + "=" + value + ";path=/;expires=" + d.toGMTString();
+    }
+
+    function set_token_btn(){
+        //read from input
+        var token = $('.token_box').val();
+        setTokenValue('token', token, 1);
+        set_token(token);
+    }
+
+    function set_token(token){
+        if (!token || token.length === 0) return;
+
+        for (var i = 0; i < context.api.length; i++) {
+            var a = context.api[i];
+            for (var j = 0; j < a.operations.length; j++){
+                if (a.operations[j].dataIn.token){
+                    a.operations[j].dataIn.token = $('.token_box').val();
+                }
+            }
+        }
+        $('.set_token').notify("Token set", {
+            position: "bottom left",
+            className: "success",
+            autoHideDelay: 1500,
+            showDuration: 100,
+            hideDuration: 100,
+        });
+    }
+
+    function copy(el,source) {
+        var text = $(el).val();
+        var c = document.createElement('input');
+        c.setAttribute('type', 'text');
+        c.setAttribute('value', text);
+        c.setAttribute('style', 'visibility: none;');
+        c = document.body.appendChild(c);
+        c.select();
+        try {
+            document.execCommand('copy');
+            $(source).notify("Copied",{
+                position: "bottom left",
+                autoHideDelay: 700,
+                className: "success",
+                showDuration: 100,
+                hideDuration: 100,
+            });
+        } catch (e) {
+            //document.remove(c);
+        } finally {
+            c.parentNode.removeChild(c);
+        }
+    }
+
+</script>
+</body>
+</html>
