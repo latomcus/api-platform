@@ -1,13 +1,13 @@
 # api-platform
-    API Platform is a web framework fo easily create and maintain API-first projects with flexibility and quick turn around.
-    * Small code base
-    * Standardized JSON response makes it easy to prototype and build web applications
-    * Secure POST communications
-    * Configurable caching with support for sliding and absolute expiration
-    * Use of service style approach in MS SQL Server stored procedures, i.e. JSON in, JSON out
-    * Use of server-less style functions to extend functionality, see /lib/functions.js
-    * Supports multiple actions, like send email, add or remove cookies, add to cache, remove from cache. More actions can be easily added
-    * Mobile friendly GUI web interface that serves as testing tool and documentation
+API Platform is a web framework fo easily create and maintain API-first projects with flexibility and quick turn around.
+* Small code base
+* Standardized JSON response makes it easy to prototype and build web applications
+* Secure POST communications
+* Configurable caching with support for sliding and absolute expiration
+* Use of service style approach in MS SQL Server stored procedures, i.e. JSON in, JSON out
+* Use of server-less style functions to extend functionality, see /lib/functions.js
+* Supports multiple actions, like send email, add or remove cookies, add to cache, remove from cache. More actions can be easily added
+* Mobile friendly GUI web interface that serves as testing tool and documentation
 
 ## Screenshots
     <img src="http://.png" title="Web page to test session.create service">
