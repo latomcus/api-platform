@@ -1,3 +1,5 @@
+--https://github.com/latomcus/api-platform
+
 --1. Create new database
 If(db_id('api_database') is null)
 	create database api_database

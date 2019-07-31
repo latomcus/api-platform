@@ -32,7 +32,6 @@ module.exports = {
         parseJSON: true,
     },
 
-    //work in progress
     postgres: {
         connectionString: 'postgres://api_user:secret@localhost:5432/api_database',
         max: 20,

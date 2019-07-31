@@ -8,6 +8,7 @@ API Platform is a web framework to easily create and maintain API-first projects
 * Use of server-less style functions to extend functionality, see /lib/functions.js
 * Supports multiple actions, like send email, add or remove cookies, add to cache, remove from cache. More actions can be easily added
 * Mobile friendly GUI web interface that serves as testing tool and documentation
+* Supported databases: Microsoft SQL Server, Postgres
 
 ### Screenshots
 <img src="https://raw.githubusercontent.com/latomcus/api-platform/dev/public/images/api-gui.png" title="Web page to test session.create service">
@@ -29,16 +30,11 @@ All configurations are in **./config.js** file
     user: 'your-email@gmail.com',
     password: 'app-secret-key'
     ```
- * `mssql`: update your SQL Server settings:
-    ```
-    user: "api_user",
-    password: "secret",
-    server: "COMPUTER2\\SQLEXPRESS",
-    database: "api_database"
-    ```
+ * `data_source`: Options: "mssql" or "postgres" or "mysql". Update configuration for a database of your choice.
 
 ### Installing
     $ git clone https://github.com/latomcus/api-platform.git
+    $ cd api-platform
     $ npm install
     $ npm start
     Open in browser: http://localhost:3000
@@ -64,6 +60,7 @@ Note for **./js/api.js**: styles for api[x].style could be one of the following:
 ### Built With
 * Node v12.6.0 - https://nodejs.org
 * Microsoft SQL Server 2017 - https://www.microsoft.com/en-us/sql-server/sql-server-2017-editions
+* PostgreSQL 11.1 - https://www.postgresql.org/
 * Express - https://expressjs.com/
 * JQuery - https://jquery.com/
 * Handlebars - https://handlebarsjs.com/
@@ -74,7 +71,7 @@ Note for **./js/api.js**: styles for api[x].style could be one of the following:
 Created by [Samuel Khaykin](mailto:latomcus@yahoo.com) Contributions and feature requests are welcome!
 
 ### Future Enhancements
- * Support for Postgres and MySQL
+ * Support for MySQL
  * Unit tests
  * API for file upload and download
  * Real-time dynamic reload of custom functions (server-less style)

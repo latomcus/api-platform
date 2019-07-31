@@ -32,7 +32,8 @@ if (config.data_source === 'postgres') {
 
 app.listen(config.port, () => {
     //todo: validate database config
-    console.log(`Server started. http://localhost:${config.port}`)
+    console.log(`- Server started: http://localhost:${config.port}`)
+    console.log(`- Database source: ${config.data_source}`)
 })
 
 app.post('/', (req, res) =>{
