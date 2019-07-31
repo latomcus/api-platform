@@ -6,6 +6,7 @@ Main application code
 
 "use strict"
 const express = require('express')
+var cors = require('cors')
 const app = express()
 var cookieParser = require('cookie-parser')
 
@@ -15,12 +16,17 @@ const functions = require('./lib/functions')
 const cache = require('./lib/cache')
 
 var bodyParser = require('body-parser')
-app.use(cookieParser())
-
 app.disable('x-powered-by')
+app.use(cors())
 app.use(bodyParser.json({limit: '1mb' }))
 app.use(bodyParser.urlencoded({ parameterLimit: 10000, limit: '1mb', extended: true }))
+app.use(cookieParser())
+
 app.use('/', express.static('public')) //set up static files folder
+
+app.options('*', require('cors')({
+    allowedHeaders: ['Set-Cookie, X-Auth-Token, Origin, X-Requested-With, Content-Type, Accept']
+}));
 
 const sql = require('mssql') //mssql library
 const pgPool = require('pg').Pool //postgres library

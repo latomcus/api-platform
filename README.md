@@ -2,7 +2,7 @@
 API Platform is a web framework to easily create and maintain API-first projects with flexibility and quick turn around
 * Small code base
 * Standardized JSON response makes it easy to prototype and build web applications
-* Secure POST communications
+* Secure POST communications, CORS enabled
 * Configurable caching with support for sliding and absolute expiration
 * Use of service style approach in MS SQL Server stored procedures, i.e. JSON in, JSON out
 * Use of server-less style functions to extend functionality, see /lib/functions.js
@@ -37,7 +37,7 @@ All configurations are in **./config.js** file
     $ cd api-platform
     $ npm install
     $ npm start
-    Open in browser: http://localhost:3000
+Open in browser: http://localhost:3000
 
 ### Data Format
 Outgoing JSON data is structured as follows:
@@ -55,7 +55,7 @@ Codes are organized as follows:
 
 ### Web Interface
 **./public/index.html** is static page that uses static **./js/api.js** to load APIs, documentation, and sample data.
-Note for **./js/api.js**: styles for api[x].style could be one of the following: primary, secondary, success, danger, warning, info, light, dark, link (as described in https://getbootstrap.com/docs/4.3/components/buttons/)
+Note for **./js/api.js**: styles for __api.style__ could be one of the following: primary, secondary, success, danger, warning, info, light, dark, link (https://getbootstrap.com/docs/4.3/components/buttons/)
 
 ### Built With
 * Node v12.6.0 - https://nodejs.org
