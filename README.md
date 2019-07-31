@@ -24,7 +24,7 @@ Once downloaded, make sure you've configured your database and email server. All
 
 ### Configuration
 All configurations are in **./config.js** file
- * `email`: tested with Gmail service. Please see steps to get your app password: https://support.google.com/mail/answer/185833?hl=en
+ * `email`: tested with Gmail service. Steps to get your app password: https://support.google.com/mail/answer/185833
     ```
     service: 'Gmail',
     user: 'your-email@gmail.com',
