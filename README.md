@@ -3,8 +3,8 @@ API Platform is a web framework to easily create and maintain API-first projects
 * Small code base
 * Standardized JSON response makes it easy to prototype and build web applications
 * Secure POST communications, CORS enabled
-* Configurable caching with support for _ _sliding_ _ and _ _absolute_ _ expiration
-* Use of _ _service style_ _ approach for all database code, i.e. JSON in, JSON out
+* Configurable caching with support for _sliding_ and _absolute_ expiration
+* Use of _service style_ approach for all database code, i.e. JSON in, JSON out
 * Use of server functions to extend functionality, see **/lib/functions.js**
 * Supports multiple actions, like send email, add or remove cookies, add to cache, remove from cache. More actions can be easily added
 * Mobile friendly GUI web interface that serves as a testing tool and documentation
@@ -54,7 +54,7 @@ Codes are organized as follows:
 
 ### Web Interface
 **./public/index.html** is static page that uses static **./js/api.js** to load APIs, documentation, and sample data.
-Note for **./js/api.js**: styles for _ _api.style_ _ could be one of the following: primary, secondary, success, danger, warning, info, light, dark, link (https://getbootstrap.com/docs/4.3/components/buttons/)
+Note for **./js/api.js**: styles for _api.style_ could be one of the following: primary, secondary, success, danger, warning, info, light, dark, link (https://getbootstrap.com/docs/4.3/components/buttons/)
 
 ### Built With
 * Node v12.6.0 - https://nodejs.org
