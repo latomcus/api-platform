@@ -9,7 +9,7 @@ module.exports = {
 
     port: 3000,
 
-    data_source: "mssql", //Options: "mssql" or "postgres" or "mysql"
+    data_source: "mysql", //Options: "mssql" or "postgres" or "mysql"
 
     cache: {
         max_size: 10000, //max number of object to keep in cache (memory)
@@ -39,9 +39,11 @@ module.exports = {
         connectionTimeoutMillis: 2000,
     },
 
-    //work in progress
     mysql: {
-        //todo: add configurations
+        host: 'localhost',
+        user: 'api_user',
+        password: 'secret',
+        database: 'api_database',
     },
 
 }

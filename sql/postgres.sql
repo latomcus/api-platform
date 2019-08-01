@@ -12,12 +12,12 @@ create schema if not exists service;
 	-- drop schema service
 
 -- 4. Create sample tables
-drop table if exists users;
 create table if not exists users
 	(id serial,
 	email varchar(50) not null,
 	password varchar(64) not null,
 	primary key (email));
+	-- drop table if exists users;
 
 -- 5. Insert sample data
 insert into users (email,password) select 'test@test.com','password'
@@ -31,7 +31,7 @@ begin
 	-- final output
 	select json_build_object('code','d.a.01','message','Sample test message','data',(
 		select json_build_object('email',email) from users)) into response;
-END; $$ language plpgsql;
+end; $$ language plpgsql;
 	-- drop function if exists service.process;
 	-- select response from service.process();
 	-- select service.process();

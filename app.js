@@ -30,10 +30,15 @@ app.options('*', require('cors')({
 
 const sql = require('mssql') //mssql library
 const pgPool = require('pg').Pool //postgres library
+const mysql = require('mysql')
 
 var pg_pool = new pgPool()
 if (config.data_source === 'postgres') {
     pg_pool = new pgPool(config.postgres)
+}
+var mysql_pool = {}
+if (config.data_source === 'mysql') {
+    mysql_pool = mysql.createPool(config.mysql)
 }
 
 app.listen(config.port, () => {
@@ -119,4 +124,20 @@ async function call_db(data_in) {
         });
     }
 
+    if (config.data_source === 'mysql'){
+        return new Promise((resolve, reject) => {
+            mysql_pool.query("call process(?,?,?)",
+                [data_in.token, data_in.action, JSON.stringify(data_in.params)],
+                function(err, result, fields) {
+                    if (err){
+                        console.log(err)
+                        reject(err)
+                    }
+                    else {
+                        resolve(JSON.parse(result[0][0].result))
+                    }
+                }
+            )
+        })
+    }
 }

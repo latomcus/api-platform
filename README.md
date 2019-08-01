@@ -1,14 +1,14 @@
 # REST API Platform (pre-alpha)
-API Platform is a web framework to easily create and maintain API-first projects with flexibility and quick turn around
+API Platform is a web framework to easily create and maintain API-first projects with flexibility and quick turn around. Suitable for small to medium projects with fluid requirements.
 * Small code base
 * Standardized JSON response makes it easy to prototype and build web applications
 * Secure POST communications, CORS enabled
-* Configurable caching with support for __sliding__ and __absolute__ expiration
-* Use of __service style__ approach for all database code, i.e. JSON in, JSON out
+* Configurable caching with support for _ _sliding_ _ and _ _absolute_ _ expiration
+* Use of _ _service style_ _ approach for all database code, i.e. JSON in, JSON out
 * Use of server functions to extend functionality, see **/lib/functions.js**
 * Supports multiple actions, like send email, add or remove cookies, add to cache, remove from cache. More actions can be easily added
 * Mobile friendly GUI web interface that serves as a testing tool and documentation
-* Supported databases: Microsoft SQL Server, Postgres
+* Supported databases: Microsoft SQL Server, Postgres, MySQL
 
 ### Screenshots
 <img src="https://raw.githubusercontent.com/latomcus/api-platform/dev/public/images/api-gui.png" title="Web page to test session.create service">
@@ -17,10 +17,9 @@ API Platform is a web framework to easily create and maintain API-first projects
 Once downloaded, make sure you've configured your database and email server. All settings are in **./config.js** file.
 
 ### Prerequisites
-* Node.js (v12 or higher) - https://nodejs.org
-* Locally installed Microsoft SQL Server (2017 or higher) - https://www.microsoft.com/en-us/sql-server/sql-server-2017-editions
-(or connectivity to existing SQL Server instance)
-* Download repository and open **./sql/sql_server.sql** in Microsoft SQL Server Management Studio, execute the script and make sure there are no errors
+* Node
+* Access to Microsoft SQL Server, PostgreSQL, or MySQL database.
+* Download repository, open **./sql/[your choice of database].sql**, and execute SQL code to create all database dependencies.
 
 ### Configuration
 All configurations are in **./config.js** file
@@ -55,12 +54,13 @@ Codes are organized as follows:
 
 ### Web Interface
 **./public/index.html** is static page that uses static **./js/api.js** to load APIs, documentation, and sample data.
-Note for **./js/api.js**: styles for __api.style__ could be one of the following: primary, secondary, success, danger, warning, info, light, dark, link (https://getbootstrap.com/docs/4.3/components/buttons/)
+Note for **./js/api.js**: styles for _ _api.style_ _ could be one of the following: primary, secondary, success, danger, warning, info, light, dark, link (https://getbootstrap.com/docs/4.3/components/buttons/)
 
 ### Built With
 * Node v12.6.0 - https://nodejs.org
 * Microsoft SQL Server 2017 - https://www.microsoft.com/en-us/sql-server/sql-server-2017-editions
 * PostgreSQL 11.1 - https://www.postgresql.org/
+* MySQL 8 - https://dev.mysql.com/downloads/mysql/
 * Express - https://expressjs.com/
 * JQuery - https://jquery.com/
 * Handlebars - https://handlebarsjs.com/
@@ -71,7 +71,6 @@ Note for **./js/api.js**: styles for __api.style__ could be one of the following
 Created by [Samuel Khaykin](mailto:latomcus@yahoo.com) Contributions and feature requests are welcome!
 
 ### Future Enhancements
- * Support for MySQL
  * Unit tests
  * API for file upload and download
  * Real-time dynamic reload of custom functions (server-less style)
