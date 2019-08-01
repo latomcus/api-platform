@@ -54,17 +54,17 @@ Codes are organized as follows:
 
 ### Web Interface
 **./public/index.html** is static page that uses static **./js/api.js** to load APIs, documentation, and sample data.
-Note for **./js/api.js**: styles for _api.style_ could be one of the following: primary, secondary, success, danger, warning, info, light, dark, link (https://getbootstrap.com/docs/4.3/components/buttons/)
+Note for **./js/api.js**: styles for _api.style_ could be one of the following: primary, secondary, success, danger, warning, info, light, dark, link (https://getbootstrap.com/docs/4.3/components/buttons)
 
 ### Built With
 * Node v12.6.0 - https://nodejs.org
 * Microsoft SQL Server 2017 - https://www.microsoft.com/en-us/sql-server/sql-server-2017-editions
-* PostgreSQL 11.1 - https://www.postgresql.org/
-* MySQL 8 - https://dev.mysql.com/downloads/mysql/
-* Express - https://expressjs.com/
-* JQuery - https://jquery.com/
-* Handlebars - https://handlebarsjs.com/
-* Bootstrap - https://getbootstrap.com/
+* PostgreSQL 11.1 - https://www.postgresql.org
+* MySQL 8 - https://dev.mysql.com/downloads/mysql
+* Express - https://expressjs.com
+* JQuery - https://jquery.com
+* Handlebars - https://handlebarsjs.com
+* Bootstrap - https://getbootstrap.com
 * Notify - https://notifyjs.jpillora.com
 
 ### Author
