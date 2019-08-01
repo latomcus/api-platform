@@ -1,12 +1,12 @@
 # REST API Platform (pre-alpha)
-API Platform is a web framework to easily create and maintain API-first projects with flexibility and quick turn around. Suitable for small to medium sized projects with fluid requirements.
+API Platform is a web framework to easily create and maintain API-first projects. Suitable for small to medium sized projects with fluid requirements.
 * Small code base
 * Standardized JSON I/O makes it easy to prototype and build client applications
 * Secure POST communications, CORS enabled
 * Configurable caching with support for _sliding_ and _absolute_ expiration
 * Use of _service style_ approach for all database code, i.e. JSON in, JSON out
 * Use of server functions to extend functionality, see **/lib/functions.js**
-* Supports multiple actions, like send email & SMS, add/remove cookies, add/remove cache, More actions can be easily added
+* Supports multiple actions: send email & SMS, add/remove cookies, add/remove cache. Add your own actions as needed
 * Mobile friendly GUI web interface that serves as a testing tool and documentation
 * Supported databases: Microsoft SQL Server, PostgreSQL, MySQL
 
@@ -65,7 +65,7 @@ More information - https://getbootstrap.com/docs/4.3/components/buttons
 * Microsoft SQL Server 2017 - https://www.microsoft.com/en-us/sql-server/sql-server-2017-editions
 * PostgreSQL 11.1 - https://www.postgresql.org
 * MySQL 8 - https://dev.mysql.com/downloads/mysql
-* Twilio service - https://www.twilio.com
+* Twilio SMS service - https://www.twilio.com
 * Express - https://expressjs.com
 * JQuery - https://jquery.com
 * Handlebars - https://handlebarsjs.com
@@ -77,6 +77,6 @@ Created by [Samuel Khaykin](mailto:latomcus@yahoo.com) Contributions and feature
 
 ### Future Enhancements
  * Unit tests
- * API for file upload and download
+ * Files upload and download support
  * Real-time dynamic reload of custom functions (server-less style)
 

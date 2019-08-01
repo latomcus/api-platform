@@ -12,7 +12,7 @@ module.exports = {
     data_source: 'mssql', //Options: 'mssql' or 'postgres' or 'mysql'
 
     cache: {
-        max_size: 10000, //max number of object to keep in cache (memory)
+        max_size: 10000, //max number of object to keep in memory cache
         default_expiration: 'absolute', //Options: 'absolute' or 'sliding'
         default_duration: 60, //in minutes
     },
@@ -21,7 +21,7 @@ module.exports = {
         //for other email server configuratins, please adopt code as per specificaitons in https://community.nodemailer.com/
         service: 'Gmail',
         user: 'your-email@gmail.com',
-        password: 'app-secret-key', //to setup, see https://support.google.com/mail/answer/185833?hl=en
+        password: 'app-secret-key', //to setup, see https://support.google.com/mail/answer/185833
     },
 
     sms: {
