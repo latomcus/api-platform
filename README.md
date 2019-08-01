@@ -18,7 +18,7 @@ Once downloaded, make sure you've configured your database and email server. All
 
 ### Prerequisites
 * Node
-* Access to Microsoft SQL Server, PostgreSQL, or MySQL database.
+* Connectivity to instances of Microsoft SQL Server, PostgreSQL, or MySQL databases
 * Download repository, open **./sql/[your choice of database].sql**, and execute SQL code to create all database dependencies.
 
 ### Configuration
