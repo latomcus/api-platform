@@ -1,5 +1,5 @@
 # REST API Platform (pre-alpha)
-API Platform is a web framework to easily create and maintain API-first projects with flexibility and quick turn around. Suitable for small to medium projects with fluid requirements.
+API Platform is a web framework to easily create and maintain API-first projects with flexibility and quick turn around. Suitable for small to medium sized projects with fluid requirements.
 * Small code base
 * Standardized JSON I/O makes it easy to prototype and build client applications
 * Secure POST communications, CORS enabled
