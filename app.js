@@ -11,6 +11,8 @@ const app = express()
 var cookieParser = require('cookie-parser')
 
 const config = require('./config')
+const db = require('./lib/db')
+db.init()
 const actions = require('./lib/actions')
 const functions = require('./lib/functions')
 const cache = require('./lib/cache')
@@ -23,26 +25,11 @@ app.use(bodyParser.urlencoded({ parameterLimit: 10000, limit: '1mb', extended: t
 app.use(cookieParser())
 
 app.use('/', express.static('public')) //set up static files folder
-
 app.options('*', require('cors')({
     allowedHeaders: ['Set-Cookie, X-Auth-Token, Origin, X-Requested-With, Content-Type, Accept']
 }));
 
-const sql = require('mssql') //mssql library
-const pgPool = require('pg').Pool //postgres library
-const mysql = require('mysql')
-
-var pg_pool = new pgPool()
-if (config.data_source === 'postgres') {
-    pg_pool = new pgPool(config.postgres)
-}
-var mysql_pool = {}
-if (config.data_source === 'mysql') {
-    mysql_pool = mysql.createPool(config.mysql)
-}
-
 app.listen(config.port, () => {
-    //todo: validate database config
     console.log(`- Server started: http://localhost:${config.port}`)
     console.log(`- Database source: ${config.data_source}`)
 })
@@ -83,7 +70,7 @@ app.post('/', (req, res) =>{
     }
 
     //if actions are not cached or handled in functions.js, call database
-    call_db(data_in)
+    db.execute(data_in)
         .then(data_out => {
             actions.process(data_in, data_out, res)
             delete data_out.actions
@@ -91,53 +78,3 @@ app.post('/', (req, res) =>{
             return
         })
 })
-
-async function call_db(data_in) {
-    if (config.data_source === 'postgres'){
-        return new Promise((resolve, reject) => {
-            pg_pool.query('select response from service.process()')
-            .then(result => {
-                resolve(result.rows[0].response);
-                pg_pool.close()
-            })
-            .catch(err =>{
-                reject(err)
-            })
-        })
-    }
-
-    if (config.data_source === 'mssql'){
-        return new Promise((resolve, reject) => {
-            new sql.ConnectionPool(config.mssql).connect().then(pool => {
-                return pool.request()
-                    .input('token', sql.VarChar(60), data_in.token)
-                    .input('action', sql.VarChar(200), data_in.action)
-                    .input('params', sql.NVarChar(sql.MAX), JSON.stringify(data_in.params))
-                    .execute('service.process')
-            }).then(result => {
-                resolve(result.recordset[0])
-                sql.close()
-            }).catch(err => {
-                reject(err)
-                sql.close()
-            });
-        });
-    }
-
-    if (config.data_source === 'mysql'){
-        return new Promise((resolve, reject) => {
-            mysql_pool.query("call process(?,?,?)",
-                [data_in.token, data_in.action, JSON.stringify(data_in.params)],
-                function(err, result, fields) {
-                    if (err){
-                        console.log(err)
-                        reject(err)
-                    }
-                    else {
-                        resolve(JSON.parse(result[0][0].result))
-                    }
-                }
-            )
-        })
-    }
-}

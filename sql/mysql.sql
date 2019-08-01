@@ -27,7 +27,7 @@ begin
 	-- add business logic here
     
 	-- final output
-    SELECT json_object('code','d.a.01','message','Test data from mysql',
+    SELECT json_object('code','d.a.01','message','Test data from MySQL',
 		'data',json_object('email',email)) as result
 	FROM api_database.users;
 end; $
@@ -35,5 +35,5 @@ end; $
 
 -- 6. Create user, grant permissions. Execute one line at a time
 create user api_user@localhost identified with mysql_native_password by 'secret';
-grant execute on procedure api_database.process to api_user@localhost;
+grant execute on procedure process to api_user@localhost;
 

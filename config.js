@@ -9,7 +9,7 @@ module.exports = {
 
     port: 3000,
 
-    data_source: "mysql", //Options: "mssql" or "postgres" or "mysql"
+    data_source: "mssql", //Options: "mssql" or "postgres" or "mysql"
 
     cache: {
         max_size: 10000, //max number of object to keep in cache (memory)

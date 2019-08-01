@@ -29,7 +29,7 @@ begin
 	-- add business logic here
 	
 	-- final output
-	select json_build_object('code','d.a.01','message','Sample test message','data',(
+	select json_build_object('code','d.a.01','message','Test data from PostgreSQL','data',(
 		select json_build_object('email',email) from users)) into response;
 end; $$ language plpgsql;
 	-- drop function if exists service.process;
