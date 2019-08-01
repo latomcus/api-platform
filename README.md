@@ -6,7 +6,7 @@ API Platform is a web framework to easily create and maintain API-first projects
 * Configurable caching with support for _sliding_ and _absolute_ expiration
 * Use of _service style_ approach for all database code, i.e. JSON in, JSON out
 * Use of server functions to extend functionality, see **/lib/functions.js**
-* Supports multiple actions, like send email, add or remove cookies, add to cache, remove from cache. More actions can be easily added
+* Supports multiple actions, like send email & SMS, add/remove cookies, add/remove cache, More actions can be easily added
 * Mobile friendly GUI web interface that serves as a testing tool and documentation
 * Supported databases: Microsoft SQL Server, PostgreSQL, MySQL
 
@@ -65,6 +65,7 @@ More information - https://getbootstrap.com/docs/4.3/components/buttons
 * Microsoft SQL Server 2017 - https://www.microsoft.com/en-us/sql-server/sql-server-2017-editions
 * PostgreSQL 11.1 - https://www.postgresql.org
 * MySQL 8 - https://dev.mysql.com/downloads/mysql
+* Twilio service - https://www.twilio.com
 * Express - https://expressjs.com
 * JQuery - https://jquery.com
 * Handlebars - https://handlebarsjs.com

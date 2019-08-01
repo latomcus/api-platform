@@ -133,6 +133,18 @@ var context = {
 				        'action': 'email.send.test1'
 				    }
 				},
+				{
+				    title: 'sms.send.test1',
+				    description: 'Test sending sms.',
+				    dataIn: {
+						'token': 'FFC9B676-44E9-4A1D-9DAB-24280601FDBF',
+						'action': 'sms.send.test1',
+						'params': {
+							'to': '+11234567890',
+							'body': 'Test sms'
+						}
+				    }
+				},				
 				
 		    ]
 		},
