@@ -8,7 +8,7 @@ API Platform is a web framework to easily create and maintain API-first projects
 * Use of server functions to extend functionality, see **/lib/functions.js**
 * Supports multiple actions, like send email, add or remove cookies, add to cache, remove from cache. More actions can be easily added
 * Mobile friendly GUI web interface that serves as a testing tool and documentation
-* Supported databases: Microsoft SQL Server, Postgres, MySQL
+* Supported databases: Microsoft SQL Server, PostgreSQL, MySQL
 
 ### Screenshots
 <img src="https://raw.githubusercontent.com/latomcus/api-platform/dev/public/images/api-gui.png" title="Web page to test session.create service">
