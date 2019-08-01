@@ -4,16 +4,16 @@ https://github.com/latomcus/api-platform
 Contains settings for port, database, etc
 */
 
-"use strict";
+'use strict';
 module.exports = {
 
     port: 3000,
 
-    data_source: "mssql", //Options: "mssql" or "postgres" or "mysql"
+    data_source: 'mssql', //Options: 'mssql' or 'postgres' or 'mysql'
 
     cache: {
         max_size: 10000, //max number of object to keep in cache (memory)
-        default_expiration: "absolute", //Options: "absolute" or "sliding"
+        default_expiration: 'absolute', //Options: 'absolute' or 'sliding'
         default_duration: 60, //in minutes
     },
 
@@ -24,11 +24,18 @@ module.exports = {
         password: 'app-secret-key', //to setup, see https://support.google.com/mail/answer/185833?hl=en
     },
 
+    sms: {
+        //Tested integration with https://www.twilio.com
+        phone_number: '1234567890', //phone number linked in your 
+        account_sid: 'AC account number', //provided by twilio
+        auth_token: 'authorization token', //provided by twilio
+    },
+
     mssql: {
-        user: "api_user",
-        password: "secret",
-        server: "COMPUTER2\\SQLEXPRESS",
-        database: "api_database",
+        user: 'api_user',
+        password: 'secret',
+        server: 'COMPUTER2\\SQLEXPRESS',
+        database: 'api_database',
         parseJSON: true,
     },
 
