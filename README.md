@@ -54,7 +54,8 @@ Codes are organized as follows:
 
 ### Web Interface
 **./public/index.html** is static page that uses static **./js/api.js** to load APIs, documentation, and sample data.
-Note for **./js/api.js**: styles for _api.style_ could be one of the following: **primary, secondary, success, danger, warning, info, light, dark, link**
+Note for **./js/api.js**: styles for _api.style_ could be one of the following: _primary, secondary, success, danger, warning, info, light, dark, link_
+
 <img src="https://raw.githubusercontent.com/latomcus/api-platform/dev/public/images/styles.png" title="Button styles">
 
 More information - https://getbootstrap.com/docs/4.3/components/buttons
