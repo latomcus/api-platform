@@ -34,11 +34,13 @@ app.listen(config.port, () => {
     console.log(`- Database source: ${config.data_source}`)
 })
 
+//handle all json POST data
 app.post('/', (req, res) =>{
+    res._api_start = new Date()
     var data_in = req.body //read request body for posted data
 
     if (!data_in.action) { //at least action must exist
-        res.json({code: 's.a.0', message: 'Missing action'})
+        out(res, {code: 's.a.0', message: 'Missing action'})
         return
     }
 
@@ -51,11 +53,9 @@ app.post('/', (req, res) =>{
     }
 
     //find if data is cached
-    var data_out = cache.find(data_in) //todo: add redis for cache
+    var data_out = cache.find(data_in)
     if (data_out) {
-        //console.log('app.cache found')
-        delete data_out.actions
-        res.json(data_out)
+        out(res, data_out)
         return
     }
 
@@ -64,8 +64,7 @@ app.post('/', (req, res) =>{
     if (typeof fn === 'function'){
         data_out = fn(data_in.token, data_in.params)
         actions.process(data_in, data_out, res)
-        delete data_out.actions
-        res.json(data_out)
+        out(res, data_out)
         return
     }
 
@@ -73,8 +72,13 @@ app.post('/', (req, res) =>{
     db.execute(data_in)
         .then(data_out => {
             actions.process(data_in, data_out, res)
-            delete data_out.actions
-            res.json (data_out)
-            return
+            out(res, data_out)
         })
 })
+
+//calculate duration in ms, remove post-processing actions, send json back to client
+function out(res, data_out){
+    delete data_out.actions
+    data_out.duration = new Date().getTime() - res._api_start.getTime()
+    res.json (data_out)
+}
