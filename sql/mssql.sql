@@ -73,7 +73,7 @@ go
 
 create or alter procedure [service].[data_out]
 @code varchar(10),@message varchar(200),@data nvarchar(max)=NULL,
-	@actions nvarchar(max)=null,@start_time datetime=null
+	@actions nvarchar(max)=null
 /*
 exec service.process @action='user.create',@params=N'{"email":"some_email7@company.com","password":"1234567"}'
 exec service.process
@@ -81,21 +81,18 @@ exec service.process
 as
 select a.code as [code],a.[message] as [message],
 	(select [data] from OPENJSON('{"data":'+@data+'}') WITH (data NVARCHAR(MAX) as JSON)) AS [data],
-	(select [actions] from OPENJSON('{"actions":'+@actions+'}') WITH (actions NVARCHAR(MAX) as JSON)) AS [actions],
-	datediff(ms,@start_time,getdate()) as [duration]
+	(select [actions] from OPENJSON('{"actions":'+@actions+'}') WITH (actions NVARCHAR(MAX) as JSON)) AS [actions]
 from (select @code AS code,@message AS [message]) a FOR JSON PATH, WITHOUT_ARRAY_WRAPPER
 
 
 /* -- alternative wrapper:
 select convert(nvarchar(max),(
-	select @code as [code],@message as [message],@data as [data],@actions as [actions],
-	datediff(ms,@start_time,getdate()) as [duration]
+	select @code as [code],@message as [message],@data as [data],@actions as [actions]
 for json path, WITHOUT_ARRAY_WRAPPER)) as response
 */
 GO
 
 create or alter procedure [service].[documentation]
-@start_time datetime=null
 /*
 sample:
 exec service.process
@@ -116,11 +113,11 @@ declare @data nvarchar(max)
 set @data = (select convert(nvarchar(500),(
 	select [action],[description] from @api for json path)))
 
-execute service.data_out @code='d.d.01',@message='Documentation',@data=@data,@start_time=@start_time
+execute service.data_out @code='d.d.01',@message='Documentation',@data=@data
 GO
 
 create or alter procedure [service].[session_create]
-@params nvarchar(max)=null,@start_time datetime=null
+@params nvarchar(max)=null
 /*
 sample:
 exec service.process @action='session.create',@params=N'{"email":"some_email@company.com","password":"1234567"}'
@@ -134,16 +131,16 @@ select @email=email,@password=[password] from OpenJson(@params) with (email nvar
 
 --validate email
 if (len(@email)<5 or @email is null) begin --minimum email is: a@b.c
-	execute service.data_out @code='d.ad.00',@message='Invalid email',@start_time=@start_time; return; end;
+	execute service.data_out @code='d.ad.00',@message='Invalid email'; return; end;
 
 --validate password
 if (len(@password)<6 or @password is null) begin --minimum password len is 6
-	execute service.data_out @code='d.ad.01',@message='Invalid password',@start_time=@start_time; return; end;
+	execute service.data_out @code='d.ad.01',@message='Invalid password'; return; end;
 
 --validate if account exists
 select @user_id=id from dbo.users where email=@email and [password]=HASHBYTES('SHA2_512', @password)
 if @user_id is null begin
-	execute service.data_out @code='d.ad.02',@message='Invalid credentials',@start_time=@start_time; return; end;
+	execute service.data_out @code='d.ad.02',@message='Invalid credentials'; return; end;
 
 --create new session
 declare @token varchar(60)=newid()
@@ -156,12 +153,12 @@ set @data = (select convert(nvarchar(500),(
 set @actions = (select convert(nvarchar(max),(
 	select 'set cookie' as [action],'token' as [name],@token as [value] for json path)))
 
-execute service.data_out @code='d.ad.03',@message='Session created',@data=@data,@actions=@actions,@start_time=@start_time
+execute service.data_out @code='d.ad.03',@message='Session created',@data=@data,@actions=@actions
 
 GO
 
 create or alter procedure [service].[session_delete]
-@token varchar(60),@start_time datetime=null
+@token varchar(60)
 /*
 sample:
 exec service.process @action='session.delete',@token='FFC9B676-44E9-4A1D-9DAB-24280601FDBF'
@@ -171,18 +168,18 @@ declare @actions nvarchar(max)
 
 --validate token
 if @token is null or len(@token)!=36 begin
-	execute service.data_out @code='d.af.00',@message='Invalid security token',@start_time=@start_time; return; end;
+	execute service.data_out @code='d.af.00',@message='Invalid security token'; return; end;
 
 delete dbo.[sessions] where token=@token
 
 set @actions = (select convert(nvarchar(max),(
 	select 'delete cookie' as [action],'token' as [name] for json path)))
 
-execute service.data_out @code='d.af.01',@message='Session deleted',@actions=@actions,@start_time=@start_time
+execute service.data_out @code='d.af.01',@message='Session deleted',@actions=@actions
 GO
 
 create or alter procedure [service].[session_is_valid]
-@token varchar(60),@start_time datetime=null
+@token varchar(60)
 /*
 sample:
 exec service.process @action='session.is_valid',@token='FFC9B676-44E9-4A1D-9DAB-24280601FDBF'
@@ -192,19 +189,19 @@ declare @user_id int,@data nvarchar(500)
 
 --validate token
 if @token is null or len(@token)!=36 begin
-	execute service.data_out @code='d.ae.00',@message='Invalid security token',@start_time=@start_time; return; end;
+	execute service.data_out @code='d.ae.00',@message='Invalid security token'; return; end;
 
 --find session
 if @token!='FFC9B676-44E9-4A1D-9DAB-24280601FDBF' begin --ignore check for test token
 	if not exists (select 1 from dbo.sessions where token=@token and expires>getdate()) begin
 		set @data = (select convert(nvarchar(max),(select 'no' as [valid] for json path, WITHOUT_ARRAY_WRAPPER)))
-		execute service.data_out @code='d.ae.01',@message='Session is not valid',@data=@data,@start_time=@start_time
+		execute service.data_out @code='d.ae.01',@message='Session is not valid',@data=@data
 		return
 	end
 end
 
 set @data = (select convert(nvarchar(500),(select 'yes' as [valid] for json path, WITHOUT_ARRAY_WRAPPER)))
-execute service.data_out @code='d.ae.02',@message='Session is valid',@data=@data,@start_time=@start_time
+execute service.data_out @code='d.ae.02',@message='Session is valid',@data=@data
 GO
 
 create or alter procedure [service].[test]
@@ -309,7 +306,7 @@ select * from dbo.sessions
 GO
 
 CREATE or alter procedure [service].[user_create]
-@token varchar(60)=null,@params nvarchar(max)=null,@start_time datetime=null
+@token varchar(60)=null,@params nvarchar(max)=null
 /*
 sample:
 exec service.process @action='user.create',@params=N'{"email":"some_email@company.com","password":"1234567"}'
@@ -351,15 +348,15 @@ select @email=email,@password=password from OpenJson(@params) with (email nvarch
 
 --validate email
 if (len(@email)<5 or @email is null) begin --minimum email is: a@b.c
-	execute service.data_out @code='d.aa.00',@message='Invalid email',@start_time=@start_time; return; end;
+	execute service.data_out @code='d.aa.00',@message='Invalid email'; return; end;
 
 --validate password
 if (len(@password)<6 or @password is null) begin --minimum password len is 6
-	execute service.data_out @code='d.a.a01',@message='Invalid password',@start_time=@start_time; return; end;
+	execute service.data_out @code='d.a.a01',@message='Invalid password'; return; end;
 
 --validate if email already exists
 if exists(select 1 from dbo.users where email=@email) begin
-	execute service.data_out @code='d.aa.02',@message='Account with this email already exists',@start_time=@start_time; return; end;
+	execute service.data_out @code='d.aa.02',@message='Account with this email already exists'; return; end;
 
 --insert new account
 declare @user_new table (id int)
@@ -376,11 +373,11 @@ set @actions = (select convert(nvarchar(max),(
 		'Account created' as [subject],
 		'Account created.' as body for json path)))
 
-execute service.data_out @code='d.aa.03',@message='Account created',@data=@data,@actions=@actions,@start_time=@start_time
+execute service.data_out @code='d.aa.03',@message='Account created',@data=@data,@actions=@actions
 GO
 
 create or alter procedure [service].[user_delete]
-@token varchar(60)=null,@params nvarchar(max)=null,@start_time datetime=null
+@token varchar(60)=null,@params nvarchar(max)=null
 /*
 sample:
 exec service.process @token='FFC9B676-44E9-4A1D-9DAB-24280601FDBF',@action='user.delete',@params=N'{"email":"some_email@company.com"}'
@@ -390,24 +387,24 @@ declare @email nvarchar(50)='',@user_id int,@actions nvarchar(max)
 
 --validate token
 if @token is null or len(@token)!=36 begin
-	execute service.data_out @code='d.ab.01',@message='Invalid security token',@start_time=@start_time; return; end;
+	execute service.data_out @code='d.ab.01',@message='Invalid security token'; return; end;
 
 --parse email input
 select @email=email from OpenJson(@params) with (email nvarchar(50) '$.email')
 
 --validate email
 if (len(@email)<5 or @email is null) begin --minimum email is: a@b.c
-	execute service.data_out @code='d.ab.02',@message='Invalid email',@start_time=@start_time; return; end;
+	execute service.data_out @code='d.ab.02',@message='Invalid email'; return; end;
 
 --validate if email exists
 select @user_id=id from dbo.users where email=@email
 if @user_id is null begin
-	execute service.data_out @code='d.ab.03',@message='Account with this email does not exist',@start_time=@start_time; return; end;
+	execute service.data_out @code='d.ab.03',@message='Account with this email does not exist'; return; end;
 
 --authorize
 if @token!='FFC9B676-44E9-4A1D-9DAB-24280601FDBF' begin --ignore if this is test token
 	if not exists (select 1 from dbo.sessions where token=@token and user_id=@user_id and expires>getdate()) begin
-		execute service.data_out @code='d.ab.04',@message='Invalid credentials or not autorized to delete account',@start_time=@start_time; return; end;
+		execute service.data_out @code='d.ab.04',@message='Invalid credentials or not autorized to delete account'; return; end;
 	end
 
 --delete
@@ -420,11 +417,11 @@ set @actions = (select convert(nvarchar(max),(
 		'Account deleted' as [subject],
 		'Account deleted.' as body
 	for json path)))
-execute service.data_out @code='d.ab.05',@message='Account deleted',@actions=@actions,@start_time=@start_time
+execute service.data_out @code='d.ab.05',@message='Account deleted',@actions=@actions
 GO
 
 create or alter procedure [service].[user_reset_password]
-@params nvarchar(max)=null,@start_time datetime=null
+@params nvarchar(max)=null
 /*
 sample:
 exec service.process @action='user.reset_password',@params=N'{"email":"some_email@company.com"}'
@@ -440,12 +437,12 @@ select @email=email from OpenJson(@params) with (email nvarchar(50) '$.email')
 
 --validate email
 if (len(@email)<5 or @email is null) begin --minimum email is: a@b.c
-	execute service.data_out @code='d.ac.01',@message='Invalid email',@start_time=@start_time; return; end;
+	execute service.data_out @code='d.ac.01',@message='Invalid email'; return; end;
 
 --validate if email exists
 select @user_id=id from dbo.users where email=@email
 if @user_id is null begin
-	execute service.data_out @code='d.ac.02',@message='Account with this email does not exist',@start_time=@start_time; return; end;
+	execute service.data_out @code='d.ac.02',@message='Account with this email does not exist'; return; end;
 
 --reset password
 declare @new_password nvarchar(50),@password_hash binary(64)
@@ -461,7 +458,7 @@ set @actions = (select convert(nvarchar(max),(
 		'support@company.com' as [to],
 		'New password' as [subject],
 		'Your new password: ' + @new_password as body for json path)))
-execute service.data_out @code='d.ac.03',@message='Password reset',@actions=@actions,@start_time=@start_time
+execute service.data_out @code='d.ac.03',@message='Password reset',@actions=@actions
 GO
 
 create or alter procedure [service].[process]
@@ -471,33 +468,31 @@ Role: routing, error handling
 */
 as
 
-declare @start_time datetime=getdate()
-
 --show documentation
-if @action is null begin exec service.documentation @start_time=@start_time; return; end
+if @action is null begin exec service.documentation; return; end
 
 --handle actions
 begin try
 	--for user
-	if @action='user.create' begin exec service.user_create @params=@params,@start_time=@start_time; return; end
-	if @action='user.delete' begin exec service.user_delete @token=@token,@params=@params,@start_time=@start_time; return; end
-	if @action='user.reset_password' begin exec service.user_reset_password @params=@params,@start_time=@start_time; return; end
+	if @action='user.create' begin exec service.user_create @params=@params; return; end
+	if @action='user.delete' begin exec service.user_delete @token=@token,@params=@params; return; end
+	if @action='user.reset_password' begin exec service.user_reset_password @params=@params; return; end
 
 	--for session
-	if @action='session.create' begin exec service.session_create @params=@params,@start_time=@start_time; return; end
-	if @action='session.is_valid' begin exec service.session_is_valid @token=@token,@start_time=@start_time; return; end
-	if @action='session.delete' begin exec service.session_delete @token=@token,@start_time=@start_time; return; end
+	if @action='session.create' begin exec service.session_create @params=@params; return; end
+	if @action='session.is_valid' begin exec service.session_is_valid @token=@token; return; end
+	if @action='session.delete' begin exec service.session_delete @token=@token; return; end
 
 	--add more handlers as needed
 
 	--default action
-	execute service.data_out @code='d.p.01',@message='Invalid Action',@start_time=@start_time
+	execute service.data_out @code='d.p.01',@message='Invalid Action'
 end try
 
 begin catch
-	insert service.audit(action,params,code,[error_number],[error_message],duration)
-	select 'service.process',@params,'0',error_number(),error_message(),datediff(ms,@start_time,getdate())
+	insert service.audit(action,params,code,[error_number],[error_message])
+	select 'service.process',@params,'0',error_number(),error_message()
 
-	execute service.data_out @code='d.p.02',@message='Error',@start_time=@start_time
+	execute service.data_out @code='d.p.02',@message='Error'
 end catch
 GO
