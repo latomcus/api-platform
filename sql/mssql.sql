@@ -369,7 +369,7 @@ values(@email, HASHBYTES('SHA2_512', @password))
 set @actions = (select convert(nvarchar(max),(
 	select 'send email' as action,@email as to_email,
 		'support@company.com' as [from],
-		'support@company.com' as [to],
+		@email as [to],
 		'Account created' as [subject],
 		'Account created.' as body for json path)))
 
@@ -413,7 +413,7 @@ delete dbo.sessions where user_id=@user_id --clear sessions
 set @actions = (select convert(nvarchar(max),(
 	select 'send email' as action,
 		'support@company.com' as [from],
-		'support@company.com' as [to],
+		@email as [to],
 		'Account deleted' as [subject],
 		'Account deleted.' as body
 	for json path)))
@@ -455,7 +455,7 @@ delete dbo.sessions where user_id=@user_id --clear sessions
 set @actions = (select convert(nvarchar(max),(
 	select 'send email' as action,
 		'support@company.com' as [from],
-		'support@company.com' as [to],
+		@email as [to],
 		'New password' as [subject],
 		'Your new password: ' + @new_password as body for json path)))
 execute service.data_out @code='d.ac.03',@message='Password reset',@actions=@actions
