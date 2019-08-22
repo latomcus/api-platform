@@ -40,8 +40,7 @@ app.post('/', (req, res) =>{
     var data_in = req.body //read request body for posted data
 
     if (!data_in.action) { //at least action must exist
-        out(res, {code: 's.a.0', message: 'Missing action'})
-        return
+        return out(res, {code: 's.a.0', message: 'Missing action'})
     }
 
     //if security token is not supplied with JSON, try to read cookie and append to data_in object
@@ -55,8 +54,7 @@ app.post('/', (req, res) =>{
     //find if data is cached
     var data_out = cache.find(data_in)
     if (data_out) {
-        out(res, data_out)
-        return
+        return out(res, data_out)
     }
 
     //handle actions if found in functions.js
@@ -64,8 +62,7 @@ app.post('/', (req, res) =>{
     if (typeof fn === 'function'){
         data_out = fn(data_in.token, data_in.params)
         actions.process(data_in, data_out, res)
-        out(res, data_out)
-        return
+        return out(res, data_out)
     }
 
     //if actions are not cached or handled in functions.js, call database
