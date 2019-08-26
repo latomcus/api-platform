@@ -6,9 +6,11 @@ Main application code
 
 "use strict"
 const express = require('express')
-var cors = require('cors')
+const cors = require('cors')
 const app = express()
 var cookieParser = require('cookie-parser')
+const responseTime = require('response-time')
+const redis = require('redis')
 
 const config = require('./config')
 const db = require('./lib/db')
@@ -19,6 +21,7 @@ const cache = require('./lib/cache')
 
 var bodyParser = require('body-parser')
 app.disable('x-powered-by')
+app.use(responseTime());
 app.use(cors())
 app.use(bodyParser.json({limit: '1mb' }))
 app.use(bodyParser.urlencoded({ parameterLimit: 10000, limit: '1mb', extended: true }))
@@ -36,7 +39,6 @@ app.listen(config.port, () => {
 
 //handle all json POST data
 app.post('/', (req, res) =>{
-    res._api_start = new Date()
     var data_in = req.body //read request body for posted data
 
     if (!data_in.action) { //at least action must exist
@@ -76,6 +78,5 @@ app.post('/', (req, res) =>{
 //calculate duration in ms, remove post-processing actions, send json back to client
 function out(res, data_out){
     delete data_out.actions
-    data_out.duration = new Date().getTime() - res._api_start.getTime()
     res.json (data_out)
 }
