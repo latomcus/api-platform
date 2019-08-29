@@ -98,7 +98,8 @@ var context = {
 				    description: 'Test adding item to cache for 1 minute, with absolute expiration, and cache key is action name.',
 				    dataIn: {
 						'token': 'FFC9B676-44E9-4A1D-9DAB-24280601FDBF',
-				        'action': 'cache.add.test1'
+						'action': 'cache.add.test1',
+						'params': { 'key_value': 'cache.add.test1'}
 				    }
 				},
 				{
