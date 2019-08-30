@@ -1,8 +1,8 @@
 # REST API Platform (pre-alpha)
 API Platform is a web framework to easily create and maintain API-first projects. Suitable for small to medium sized projects with fluid requirements.
 * Performance: using multi-CPUs and shared in-memory cache
-* Standard: input/output data in specific JSON format makes it easy to prototype and build client applications
-* Secure: all POST communications (use SSL in production), CORS enabled
+* Standard: consistent input/output JSON format makes it easy to prototype and build client applications
+* Secure: all POST communications (use SSL in production); CORS enabled
 
 ### Features
 * Configurable caching with support for _sliding_ and _absolute_ expiration
@@ -40,7 +40,7 @@ All configurations are in **./config.js** file
     $ npm run start
 Open in browser: http://localhost:3000
 
-If _config.cache.autostart_: **false**, then start cache as a separate process:
+# If _config.cache.autostart_: **false**, then start cache as a separate process:
    $ npm run cache
 
 ### Data Format
