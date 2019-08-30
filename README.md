@@ -40,8 +40,8 @@ All configurations are in **./config.js** file
     $ npm run start
 Open in browser: http://localhost:3000
 
-#### If _config.cache.autostart_: **false**, then start cache as a separate process:
-   $ npm run cache
+##### If _config.cache.autostart_: **false**, then start cache as a separate process:
+    $ npm run cache
 
 ### Data Format
 Outgoing JSON data is structured as follows:
