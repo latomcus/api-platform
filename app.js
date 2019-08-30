@@ -7,8 +7,8 @@ App entry point
 const cluster = require('cluster')
 
 if (cluster.isMaster) {
-    console.log(`+ Master ${process.pid} is running`)
-    require('./master')
+    console.log(`+ Master [${process.pid}] is running`)
+    require('./lib/master') //create master process
 } else {
-    require('./worker')
+    require('./lib/worker') //create worker processes
 }
