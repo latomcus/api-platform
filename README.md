@@ -39,7 +39,8 @@ All configurations are in **./config.js** file
     $ npm install
     $ npm run start
 Open in browser: http://localhost:3000  
-If _config.cache.autostart_: **false**, then start cache as a separate process:  
+
+#### If _config.cache.autostart_: **false**, then start cache as a separate process:  
     $ npm run cache  
 To test cache: http://localhost:3001/ping
 
