@@ -2,7 +2,7 @@ var context = {
     api: [
 		{
 		    domain: 'user',
-		    style: 'success',
+		    style: 'secondary',
 		    operations: [
 				{
 				    title: 'user.create',
@@ -40,7 +40,7 @@ var context = {
 		},
 		{
 		    domain: 'session',
-		    style: 'info',
+		    style: 'secondary',
 		    operations: [
 				{
 				    title: 'session.create',
@@ -73,7 +73,7 @@ var context = {
 		},
 		{
 		    domain: 'test',
-		    style: 'warning',
+		    style: 'secondary',
 		    operations: [
 				{
 				    title: 'hello world',

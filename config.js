@@ -7,6 +7,7 @@ Contains settings for port, database, etc
 'use strict';
 module.exports = {
 
+    account_sid: 'A4960E3D619B4E0E984A4568E7F04EA7',
     port: 3000,
 
     data_source: 'mssql', //Options: 'mssql' or 'postgres' or 'mysql'

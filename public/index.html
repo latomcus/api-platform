@@ -73,6 +73,7 @@
             padding: 5px 5px 1px 8px;
             min-height: 200px;
             width: 100%;
+            font-size: 12px;
             /* color: #959595;
             background-color: #f3f3f3;
             border: 0px;
@@ -368,10 +369,12 @@
         
         $dataOut = $(".dataOut");
         $dataOut.val('');
+        //for(var j = 0; j<1001; j++){
         $.ajax({
             type: 'POST',
             dataType: 'json',
             url: '/',
+            headers: { 'api-account-sid': 'A4960E3D619B4E0E984A4568E7F04EA7' },
             data: obj,
             success: function (data, textStatus, request) {
                 $dataOut.val(JSON.stringify(data, null, '\t'));
@@ -388,6 +391,7 @@
                 $('.error_message').text('Error: ' + thrownError);
             }
         });
+        //}
     }
 
     function getTokenValue(token) {
