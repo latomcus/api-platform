@@ -76,6 +76,13 @@ var context = {
 		    style: 'secondary',
 		    operations: [
 				{
+				    title: 'ping',
+				    description: 'Test function ping-pong.',
+				    dataIn: {
+						'action': 'ping'
+					}
+				},
+				{
 				    title: 'hello world',
 				    description: 'Sample execution of a function (non-database).',
 				    dataIn: {
