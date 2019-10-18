@@ -1,3 +1,4 @@
 /node_modules
 /wip
-/curl
+/.vscode
+/uploads/*

@@ -1,0 +1,4 @@
+./curl -F 'avatar=@./image1.jpg'  -F 'second=@./image2.jpg' -F 'token=123456789' http://localhost:3000
+
+
+
