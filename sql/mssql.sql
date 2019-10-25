@@ -486,7 +486,7 @@ begin try
 	--add more handlers as needed
 
 	--default action
-	execute service.data_out @code='d.p.01',@message='Invalid Action'
+	execute service.data_out @code='d.p.01',@message='Unknown action'
 end try
 
 begin catch

@@ -1,0 +1,82 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name='description' content='API Platform'/>
+    <meta name='author' content='latomcus@yahoo.com'/>
+    <link rel='shortcut icon' href="images/api.ico">
+    <title>API Platform</title>
+    <script src="js/jquery-3.1.0.min.js"></script>    
+    <script src="js/handlebars-v4.0.5.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/notify.min.js"></script>
+    <script src="js/api.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">   
+    <style>
+        body {
+            font-family: "Tahoma";
+            font-size: 90%;
+            margin: 5px;
+        }
+
+        html {
+            width: calc(100vw - 20px);
+        }
+
+        
+        .img_platform {
+            vertical-align: initial;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="col">
+                <h5><img class="img_platform" src="images/api.gif"> API Platform</h5>
+            </div>
+            <!--<div class="col">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control token_box" aria-label="token" aria-describedby="basic-addon1">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary set_token" type="button" id="button-addon2" onclick="set_token_btn();">Set token</button>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+
+        <script id="partial_footer" type="text/x-handlebars-template">
+            <div class="row">
+                    <h1 class="h6 mb-3 font-weight-normal">Login</h1>
+        
+                    <label for="txtFirstname" class="sr-only">User</label>
+                    <input name="txtFirstname" type="text" id="txtFirstname" class="form-control" placeholder="First name" autocomplete="off" spellcheck="false" required="" autofocus="" />
+        
+                    <label for="txtLastname" class="sr-only">Password</label>
+                    <input name="txtLastname" type="text" id="txtLastname" class="form-control" placeholder="Last name" autocomplete="off" spellcheck="false" required="" />
+        
+                    <input type="submit" name="btnReset" value="Reset" id="btnReset" class="btn btn-lg btn-primary btn-block" />
+                </div>
+        </script>
+
+        <div class="content-placeholder"></div>
+    </div>
+</body>
+
+<script>
+
+    $(function () {
+        //load from cookie storage
+        var t = getTokenValue('token');
+        $('.token_box').val(t);
+        set_token(t);
+
+        
+    });
+
+</script>
+
+</html>
