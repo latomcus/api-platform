@@ -1,5 +1,13 @@
 --https://github.com/latomcus/api-platform
 
+/*
+	Cleanup scripts:
+	drop table dbo.sessions;
+	drop table dbo.users;
+	drop table service.audit;
+
+*/
+
 --1. Create new database
 If(db_id('api_database') is null)
 	create database api_database
@@ -57,7 +65,8 @@ if object_id('service.audit') is null
 	create table service.audit(
 	id int identity(0,1) not null,
 	created_on datetime not null default getdate(),
-	action varchar(200) not null,
+	[token] varchar(60) null,
+	[action] varchar(200) not null,
 	params nvarchar(max) null,
 	code varchar(10) null,
 	error_number varchar(20) null,
@@ -486,12 +495,12 @@ begin try
 	--add more handlers as needed
 
 	--default action
-	execute service.data_out @code='d.p.01',@message='Invalid Action'
+	execute service.data_out @code='d.p.01',@message='Unknown action'
 end try
 
 begin catch
-	insert service.audit(action,params,code,[error_number],[error_message])
-	select 'service.process',@params,'0',error_number(),error_message()
+	insert service.audit(token,[action],params,code,[error_number],[error_message])
+	select @token,@action,@params,'0',error_number(),error_message()
 
 	execute service.data_out @code='d.p.02',@message='Error'
 end catch

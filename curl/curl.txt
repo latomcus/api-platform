@@ -1,0 +1,9 @@
+// missing token
+./curl -F 'avatar=@./image1.jpg'  -F 'second=@./image2.jpg'  http://localhost:3000
+
+./curl -F 'avatar=@./image1.jpg'  -F 'second=@./image2.jpg' -F 'token=123456789' http://localhost:3000
+
+./curl -X POST -H "Content-Type: application/x-www-form-urlencoded"  -F 'action=123456789' http://localhost:3000
+
+./curl -X POST -d "param1=value1&param2=value2" http://localhost:3000
+

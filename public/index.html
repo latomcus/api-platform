@@ -7,14 +7,24 @@
     <meta name='author' content='latomcus@yahoo.com'/>
     <link rel='shortcut icon' href="images/api.ico">
     <title>API Platform</title>
+
     <script src="js/jquery-3.1.0.min.js"></script>    
     <script src="js/handlebars-v4.0.5.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/notify.min.js"></script>
     <script src="js/api.js"></script>
-    <link rel="stylesheet" href="css/bootstrap.min.css">   
+    <link rel="stylesheet" href="css/bootstrap.min.css">    
 
     <style>
+        .api_button {
+            margin: 1px 0px 1px 0px;
+            padding: 1px 3px 2px 3px;
+        }
+
+        .api_header {
+            margin-bottom: 5px;
+        }
+
         body {
             font-family: "Tahoma";
             font-size: 90%;
@@ -73,13 +83,14 @@
             padding: 5px 5px 1px 8px;
             min-height: 200px;
             width: 100%;
+            font-size: 12px;
             /* color: #959595;
             background-color: #f3f3f3;
             border: 0px;
             font-size: smaller; */
         }
 
-        .dataIn {
+        .data_in {
             padding: 5px 5px 1px 8px;
             min-height: 130px;
         }
@@ -192,8 +203,8 @@
 <div class="container">
 
     <div class="row">
-        <div class="col">
-            <h5><img class="img_platform" src="images/api.gif"> API Platform</h5>
+        <div class="col api_header">
+            <h5>API Platform <img class="img_platform" src="images/api.gif"></h5>
          </div>
          <div class="col">
             <div class="input-group input-group-sm">
@@ -208,41 +219,9 @@
     <script id="apis-domain" type="text/x-handlebars-template">
         <div class="row">
             <div class="col">
-            {{#each api}}
-                <div class="btn-group sb_btn">
-                    <button type='button' class="btn btn-sm btn-{{style}}" onclick="ShowApis(this);">{{domain}}</button>
-                    <button type="button" class="btn btn-sm btn-{{style}} dropdown-toggle dropdown-toggle-split"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <div class="dropdown-menu">
-                        {{#each operations}}
-                        <button type='button' class="btn btn-sm btn-link dropdown-item" onclick="ShowApi(this);">{{title}}</button>
-                        {{/each}}
-                    </div>
-                </div>
+            {{#each data}}
+                <button type='button' class="btn btn-sm btn-secondary api_button" onclick="showApi('{{title}}');">{{title}}</button>
             {{/each}}
-            </div>
-        </div>
-    </script>
-
-    <script id="apis-operations" type="text/x-handlebars-template">
-        <div class='box'>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">{{domain}}</h5>
-                </div>
-                <ul class="list-group list-group-flush">
-                     {{#each operations}}
-                        <li class="list-group-item">
-                            <button type="button" class="btn btn-link" onclick="ShowApi(this);">{{title}}</button>
-                            <span class="card-text text-secondary">{{description}}</span>
-                        </li>
-                    {{/each}}
-                </ul>
-                <div class="card-footer">
-                    <small class="text-muted">{{> partial_footer}}</small>
-                </div>
             </div>
         </div>
     </script>
@@ -251,16 +230,16 @@
         <div class='box'>
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">{{domain}} : {{title}}</h5>
+                    <h5 class="card-title">{{title}}</h5>
                     <p class="card-text text-secondary">{{description}}</p>
                 </div>
                 <div class='smalltitle'>Request
-                    <div class='copy' onclick='copy(".dataIn",this);'>copy</div>
+                    <div class='copy' onclick='copy(".data_in",this);'>copy</div>
                 </div>
-                <textarea spellcheck='false' class='inputbox dataIn'>{{ stringify dataIn }}</textarea>
+                <textarea spellcheck='false' class='inputbox data_in'>{{ stringify data_in }}</textarea>
                 <div class="row">
                         <div class="col-md-12">
-                            <button type='button' class='btn btn-sm btn-dark sb_execute_button' onclick="Run(this);">Execute</button>
+                            <button type='button' class='btn btn-sm btn-dark sb_execute_button' onclick="api_run(this);">Execute</button>
                             <span class='error_message'></span>
                         </div>
                 </div>
@@ -294,29 +273,15 @@
 </div>
 
 <script>
-       
-    function ShowApi(api) {
-        for (var i = 0; i < context.api.length; i++) {
-            for (var j = 0; j < context.api[i].operations.length; j++) {
-                var a = context.api[i].operations[j];
-                if (a.title === api.innerText) {
-                    a = $.extend({}, a);
-                    a.domain = context.api[i].domain;
-                    var theTemplateScript = $("#apis-template").html();
-                    var theTemplate = Handlebars.compile(theTemplateScript);
-                    var theCompiledHtml = theTemplate(a);
-                    $('.content-placeholder').html(theCompiledHtml);
-                    return;
-                }
-            }
-        }
-    }
-
-    function ShowApis(api) {
-        for (var i = 0; i < context.api.length; i++) {
-            var a = context.api[i];
-            if (a.domain === api.innerText) {
-                var theTemplateScript = $("#apis-operations").html();
+    var api_list;
+    
+    function showApi(api) {
+        var list = api_list.data;
+        for (var i = 0; i < list.length; i++) {
+            var a = list[i];
+            if (a.title === api) {
+                a = $.extend({}, a);
+                var theTemplateScript = $("#apis-template").html();
                 var theTemplate = Handlebars.compile(theTemplateScript);
                 var theCompiledHtml = theTemplate(a);
                 $('.content-placeholder').html(theCompiledHtml);
@@ -325,39 +290,59 @@
         }
     }
 
-    //helpers
     Handlebars.registerHelper('stringify', function (obj) {
         return JSON.stringify(obj, null, '\t');
     });
 
-    Handlebars.registerHelper('global', function (context, options) {
+    Handlebars.registerHelper('global', function (api_list, options) {
         return options.fn({'year': (new Date()).getFullYear()});
     });
 
     var sourcePartial = $("#partial_footer").html();
     Handlebars.registerPartial("partial_footer", sourcePartial);
 
-    $(function () {
-        loadAPIs();
-        //load from cookie storage
+    $(function() {
+        get_data(JSON.parse('{"action":"apis.list"}'), load_apis)
+    });
+
+    function get_data(_data_in, callback) {
+         $.ajax({
+            type: 'POST', dataType: 'json', url: '/', data: _data_in,
+            success: function (_data, _textStatus, _request) {
+                callback(null, { data: _data, request: _request });
+            },
+            error: function (_xhr, _ajaxOptions, _thrownError) {
+                callback({ xhr: _xhr, thrownError: _thrownError }, null);
+            }
+        });
+    }
+
+    function sortByKey(array, key) {
+        return array.data.sort(function(a, b) {
+            var x = a[key]; var y = b[key];
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        });
+    }
+
+    function load_apis(error, _apis_list) {
+        api_list = { data: sortByKey(_apis_list.data, 'title') };
+        var tScript = $("#apis-domain").html();
+        var template = Handlebars.compile(tScript);
+
+        var compiledHtml = template(api_list);
+        $('.domain-placeholder').append(compiledHtml);
+
         var t = getTokenValue('token');
         $('.token_box').val(t);
         set_token(t);
-    });
-
-    function loadAPIs() {
-        var theTemplateScript = $("#apis-domain").html();
-        var theTemplate = Handlebars.compile(theTemplateScript);
-
-        var theCompiledHtml = theTemplate(context);
-        $('.domain-placeholder').append(theCompiledHtml);
     }
 
-    function Run(el) {
-        var text = $('.dataIn').val();
+    function api_run(el) {
+        var text = $('.data_in').val();
 
+        var _data_in = {};
         try {
-            var obj = JSON.parse(text);
+            _data_in = JSON.parse(text);
             $('.error_message').text('');
         }
         catch (ex) {
@@ -368,26 +353,24 @@
         
         $dataOut = $(".dataOut");
         $dataOut.val('');
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            url: '/',
-            data: obj,
-            success: function (data, textStatus, request) {
-                $dataOut.val(JSON.stringify(data, null, '\t'));
-                $('.dataOutHeaders').val(request.getAllResponseHeaders());
+        get_data(_data_in, run_results)
+    }
 
-                if (data.code === 'd.ad.03'){ //session cookie set up
-                    var t = getTokenValue('token');
-                    $('.token_box').val(t);
-                    set_token(t);
-                }
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                $dataOut.val(JSON.stringify(xhr, null, '\t'));
-                $('.error_message').text('Error: ' + thrownError);
+    function run_results(error, data){
+        if (error){
+            $dataOut.val(JSON.stringify(error.xhr, null, '\t'));
+            $('.error_message').text('Error: ' + error.thrownError);
+        }
+        else {
+            $dataOut.val(JSON.stringify(data.data, null, '\t'));
+            $('.dataOutHeaders').val(data.request.getAllResponseHeaders());
+
+            if (data.data.code === 'd.ad.03'){ //session cookie setup
+                var t = getTokenValue('token');
+                $('.token_box').val(t);
+                set_token(t);
             }
-        });
+        }
     }
 
     function getTokenValue(token) {
@@ -402,7 +385,6 @@
     }
 
     function set_token_btn(){
-        //read from input
         var token = $('.token_box').val();
         setTokenValue('token', token, 1);
         set_token(token);
@@ -411,12 +393,10 @@
     function set_token(token){
         if (!token || token.length === 0) return;
 
-        for (var i = 0; i < context.api.length; i++) {
-            var a = context.api[i];
-            for (var j = 0; j < a.operations.length; j++){
-                if (a.operations[j].dataIn.token){
-                    a.operations[j].dataIn.token = $('.token_box').val();
-                }
+        for (var i = 0; i < api_list.data.length; i++) {
+            var a = api_list.data[i];
+            if (a.data_in.token){
+                a.data_in.token = $('.token_box').val();
             }
         }
         $('.set_token').notify("Token set", {
@@ -446,12 +426,11 @@
                 hideDuration: 100,
             });
         } catch (e) {
-            //document.remove(c);
         } finally {
             c.parentNode.removeChild(c);
         }
     }
 
-</script>
-</body>
+    </script>
+    </body>
 </html>

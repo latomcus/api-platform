@@ -1,8 +1,8 @@
 # REST API Platform (alpha)
 API Platform is a web framework to easily create and maintain API-first projects. Suitable for small to medium sized projects with fluid requirements.
-* Performance: using multi-CPUs and shared in-memory cache
-* Standard: consistent input/output JSON format makes it easy to prototype and build client applications
-* Secure: all POST communications (use SSL in production); CORS enabled
+* Performance: multi-CPU utilization and shared in-memory cache
+* Standard: consistent I/O JSON format for prototyping and troubleshooting on client applications
+* Secure: all POST communications (use https in production); CORS enabled
 
 ### Features
 * Configurable caching with support for _sliding_ and _absolute_ expiration

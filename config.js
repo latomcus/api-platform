@@ -13,13 +13,14 @@ module.exports = {
 
     cache: {
         auto_start: true, //autostarts cache process
-        url: 'http://localhost:3001', //port number for in-memory cache service
+        url: 'http://localhost:3001/cache', //port number for in-memory cache service
         max_size: 10000, //max number of object to keep in memory cache
         default_expiration: 'absolute', //Options: 'absolute' or 'sliding'
         default_duration: 60, //in minutes
     },
 
     email: {
+        enabled: false,
         //for other email server configuratins, please adopt code as per specificaitons in https://community.nodemailer.com/
         service: 'Gmail',
         user: 'your-email@gmail.com',
@@ -27,6 +28,7 @@ module.exports = {
     },
 
     sms: {
+        enabled: false,
         //Tested integration with https://www.twilio.com
         phone_number: '1234567890', //phone number linked in your 
         account_sid: 'AC account number', //provided by twilio
