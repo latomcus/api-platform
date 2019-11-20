@@ -20,6 +20,7 @@ module.exports = {
     },
 
     email: {
+        enabled: false,
         //for other email server configuratins, please adopt code as per specificaitons in https://community.nodemailer.com/
         service: 'Gmail',
         user: 'your-email@gmail.com',
@@ -27,6 +28,7 @@ module.exports = {
     },
 
     sms: {
+        enabled: false,
         //Tested integration with https://www.twilio.com
         phone_number: '1234567890', //phone number linked in your 
         account_sid: 'AC account number', //provided by twilio
