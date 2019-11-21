@@ -12,7 +12,7 @@ module.exports = {
     data_source: 'mssql', //Options: 'mssql' or 'postgres' or 'mysql'
 
     cache: {
-        auto_start: true, //autostarts cache process
+        enabled: true,
         url: 'http://localhost:3001/cache', //port number for in-memory cache service
         max_size: 10000, //max number of object to keep in memory cache
         default_expiration: 'absolute', //Options: 'absolute' or 'sliding'
