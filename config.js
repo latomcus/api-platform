@@ -11,6 +11,10 @@ module.exports = {
 
     data_source: 'mssql', //Options: 'mssql' or 'postgres' or 'mysql'
 
+    security: [
+        { token: 'projectA.b%W$aLra*S87o5gS^svTe!npXsmx2f', permissions: ['send email'] }, //trusted tokens and actions allowed to execute
+    ],
+
     cache: {
         enabled: true,
         url: 'http://localhost:3001/cache', //port number for in-memory cache service
