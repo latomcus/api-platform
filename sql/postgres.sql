@@ -24,7 +24,7 @@ insert into users (email,password) select 'test@test.com','password'
 
 -- 6. Create functions
 create or replace function service.process
-(token varchar(60)=null,action varchar(200)=null,params JSON=null,out response JSON) as $$
+(token varchar(60)=null,action varchar(200)=null,payload JSON=null,out response JSON) as $$
 begin
 	-- add business logic here
 	

@@ -12,7 +12,16 @@ module.exports = {
     data_source: 'mssql', //Options: 'mssql' or 'postgres' or 'mysql'
 
     security: [
-        { token: 'projectA.b%W$aLra*S87o5gS^svTe!npXsmx2f', permissions: ['send email'] }, //trusted tokens and actions allowed to execute
+        {
+            app_key: 'Hk3v7xjLBtkPrMh45EPDGEm26FD2k64MJA2pPvStvN',
+            permissions: ['list apis', 'upload files', 'send email','session.create']
+
+        },
+        {
+            app_key: 'b%W$aLra*S87o5gS^svTe!npXsmx2f',
+            permissions: ['send email']
+        },
+
     ],
 
     cache: {

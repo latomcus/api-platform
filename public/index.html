@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
+
 <head>
-    <meta charset='utf-8'/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name='description' content='API Platform'/>
-    <meta name='author' content='latomcus@yahoo.com'/>
-    <link rel='shortcut icon' href="images/api.ico">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="API Platform" />
+    <meta name="author" content="latomcus@yahoo.com" />
+    <link rel="shortcut icon" href="images/api.ico" />
     <title>API Platform</title>
 
-    <script src="js/jquery-3.1.0.min.js"></script>    
-    <script src="js/handlebars-v4.0.5.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.1.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="js/notify.min.js"></script>
-    <script src="js/api.js"></script>
-    <link rel="stylesheet" href="css/bootstrap.min.css">    
+    <script src="js/handlebars-v4.0.5.js"></script>
 
     <style>
         .api_button {
@@ -40,7 +41,14 @@
             cursor: pointer;
         }
 
-        .btn:focus,.btn:active:focus,.btn.active:focus, .btn.focus,.btn:active.focus,.btn.active.focus,textarea,.btn {
+        .btn:focus,
+        .btn:active:focus,
+        .btn.active:focus,
+        .btn.focus,
+        .btn:active.focus,
+        .btn.active.focus,
+        textarea,
+        .btn {
             outline: none !important;
             box-shadow: none;
         }
@@ -57,12 +65,12 @@
             white-space: pre-wrap;
         }
 
-       .box {
+        .box {
             margin: 15px 0px 0px 0px;
         }
 
         .smalltitle {
-            background-color: rgba(0,0,0,.03);
+            background-color: rgba(0, 0, 0, 0.03);
             font-size: 10pt;
             width: 100%;
             padding: 2px 3px;
@@ -179,12 +187,7 @@
             color: #e40000;
         }
 
-        .input-group {
-            max-width: 380px;
-            right: 15px;
-            position: absolute;
-        }
-        .token_box{
+        .token_box {
             background-color: #fafafa;
             color: #79797b;
         }
@@ -193,40 +196,71 @@
             vertical-align: initial;
         }
 
-        .sb_execute_button{
+        .sb_execute_button {
             margin: 6px 0px 4px 6px;
         }
-
+        .sb_set_btns {
+            width: 110px;
+            text-align: left;
+        }
+        .sb_set_box {
+            margin-bottom: 3px;
+        }
     </style>
 </head>
-<body>
-<div class="container">
 
-    <div class="row">
-        <div class="col api_header">
-            <h5>API Platform <img class="img_platform" src="images/api.gif"></h5>
-         </div>
-         <div class="col">
-            <div class="input-group input-group-sm">
-                <input type="text" class="form-control token_box" aria-label="token" aria-describedby="basic-addon1">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary set_token" type="button" id="button-addon2" onclick="set_token_btn();">Set token</button>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-lg-3 api_header">
+                <h5>
+                    API Platform <img class="img_platform" src="images/api.gif" />
+                </h5>
+            </div>
+            <div class="col-md-6 offset-md-3 col-lg-6 offset-lg-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group input-group-sm sb_set_box">
+                                <input type="text" class="form-control app_key_input" placeholder="Enter APP key"
+                                    aria-describedby="basic-addon" value="Hk3v7xjLBtkPrMh45EPDGEm26FD2k64MJA2pPvStvN" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary sb_set_btns set_app_key" type="button" id="button-addon2"
+                                        onclick="set_app_key_btn();">Set APP Key</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group input-group-sm sb_set_box">
+                                <input type="text" class="form-control token_input" placeholder="Enter token"
+                                    aria-describedby="basic-addon" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary sb_set_btns set_token" type="button"
+                                        id="button-addon2" onclick="set_token_btn();">Set Token</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <script id="apis-domain" type="text/x-handlebars-template">
         <div class="row">
-            <div class="col">
-            {{#each data}}
-                <button type='button' class="btn btn-sm btn-secondary api_button" onclick="showApi('{{title}}');">{{title}}</button>
-            {{/each}}
+            <div class="col-md-auto">
+                <div class="domain-placeholder"></div>
             </div>
         </div>
-    </script>
 
-    <script id="apis-template" type="text/x-handlebars-template">
+        <div class="content-placeholder"></div>
+
+        <script id="apis-domain" type="text/x-handlebars-template">
+        {{#each data}}
+            <button type='button' class="btn btn-sm btn-secondary api_button" onclick="showApi('{{title}}');">{{title}}</button>
+        {{/each}}
+      </script>
+
+        <script id="apis-template" type="text/x-handlebars-template">
         <div class='box'>
             <div class="card">
                 <div class="card-body">
@@ -259,178 +293,180 @@
                 <div class="card-footer"><small class="text-muted">{{> partial_footer}}</small></div>
             </div>
         </div>
-    </script>
+      </script>
 
-    <script id="partial_footer" type="text/x-handlebars-template">
+        <script id="partial_footer" type="text/x-handlebars-template">
         <span>&copy; Copyright {{#global 'global'}}{{year}}{{/global}}</span>, API Platform
-    </script>
-
-    <div class="row">
-        <div class="col-md-12 domain-placeholder"></div>
+      </script>
     </div>
 
-    <div class="content-placeholder"></div>
-</div>
+    <script>
+        var api_list;
 
-<script>
-    var api_list;
-    
-    function showApi(api) {
-        var list = api_list.data;
-        for (var i = 0; i < list.length; i++) {
-            var a = list[i];
-            if (a.title === api) {
-                a = $.extend({}, a);
-                var theTemplateScript = $("#apis-template").html();
-                var theTemplate = Handlebars.compile(theTemplateScript);
-                var theCompiledHtml = theTemplate(a);
-                $('.content-placeholder').html(theCompiledHtml);
+        function showApi(api) {
+            var list = api_list.data;
+            for (var i = 0; i < list.length; i++) {
+                var a = list[i];
+                if (a.title === api) {
+                    a = $.extend({}, a);
+                    var theTemplateScript = $("#apis-template").html();
+                    var t = Handlebars.compile(theTemplateScript);
+                    var c = t(a);
+                    $(".content-placeholder").html(c);
+                    return;
+                }
+            }
+        }
+
+        Handlebars.registerHelper("stringify", function (obj) {
+            return JSON.stringify(obj, null, "\t");
+        });
+
+        Handlebars.registerHelper("global", function (api_list, options) {
+            return options.fn({ year: new Date().getFullYear() });
+        });
+
+        var sourcePartial = $("#partial_footer").html();
+        Handlebars.registerPartial("partial_footer", sourcePartial);
+
+        $(function () {
+            get_data(JSON.parse('{"action":"list apis"}'), load_apis);
+        });
+
+        function get_data(_data_in, callback) {
+            _data_in.app_key = $(".app_key_input").val();
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "/", //or:  + $(".app_key_input").val(),
+                data: _data_in,
+                success: function (_data, _textStatus, _request) {
+                    callback(null, { data: _data, request: _request });
+                },
+                error: function (_xhr, _ajaxOptions, _thrownError) {
+                    callback({ xhr: _xhr, thrownError: _thrownError }, null);
+                }
+            });
+        }
+
+        function sortByKey(array, key) {
+            return array.data.sort(function (a, b) {
+                var x = a[key];
+                var y = b[key];
+                return x < y ? -1 : x > y ? 1 : 0;
+            });
+        }
+
+        function load_apis(error, _apis_list) {
+            api_list = { data: sortByKey(_apis_list.data, "title") };
+            var tScript = $("#apis-domain").html();
+            var template = Handlebars.compile(tScript);
+
+            var c = template(api_list);
+            $(".domain-placeholder").html(c);
+
+            var t = getTokenValue("token");
+            $(".token_input").val(t);
+            set_token(t);
+        }
+
+        function api_run(el) {
+            var text = $(".data_in").val();
+
+            var _data_in = {};
+            try {
+                _data_in = JSON.parse(text);
+                $(".error_message").text("");
+            } catch (ex) {
+                var er = "The request is not in a valid JSON format";
+                $(".error_message").text(er);
                 return;
             }
+
+            $dataOut = $(".dataOut");
+            $dataOut.val("");
+            get_data(_data_in, run_results);
         }
-    }
 
-    Handlebars.registerHelper('stringify', function (obj) {
-        return JSON.stringify(obj, null, '\t');
-    });
+        function run_results(error, data) {
+            //console.log(data);
+            if (error) {
+                $dataOut.val(JSON.stringify(error.xhr, null, "\t"));
+                $(".error_message").text("Error: " + error.thrownError);
+            } else {
+                $dataOut.val(JSON.stringify(data.data, null, "\t"));
+                $(".dataOutHeaders").val(data.request.getAllResponseHeaders());
 
-    Handlebars.registerHelper('global', function (api_list, options) {
-        return options.fn({'year': (new Date()).getFullYear()});
-    });
-
-    var sourcePartial = $("#partial_footer").html();
-    Handlebars.registerPartial("partial_footer", sourcePartial);
-
-    $(function() {
-        get_data(JSON.parse('{"action":"apis.list"}'), load_apis)
-    });
-
-    function get_data(_data_in, callback) {
-         $.ajax({
-            type: 'POST', dataType: 'json', url: '/', data: _data_in,
-            success: function (_data, _textStatus, _request) {
-                callback(null, { data: _data, request: _request });
-            },
-            error: function (_xhr, _ajaxOptions, _thrownError) {
-                callback({ xhr: _xhr, thrownError: _thrownError }, null);
-            }
-        });
-    }
-
-    function sortByKey(array, key) {
-        return array.data.sort(function(a, b) {
-            var x = a[key]; var y = b[key];
-            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-        });
-    }
-
-    function load_apis(error, _apis_list) {
-        api_list = { data: sortByKey(_apis_list.data, 'title') };
-        var tScript = $("#apis-domain").html();
-        var template = Handlebars.compile(tScript);
-
-        var compiledHtml = template(api_list);
-        $('.domain-placeholder').append(compiledHtml);
-
-        var t = getTokenValue('token');
-        $('.token_box').val(t);
-        set_token(t);
-    }
-
-    function api_run(el) {
-        var text = $('.data_in').val();
-
-        var _data_in = {};
-        try {
-            _data_in = JSON.parse(text);
-            $('.error_message').text('');
-        }
-        catch (ex) {
-            var er = 'The request is not in a valid JSON format';
-            $('.error_message').text(er);
-            return;
-        }
-        
-        $dataOut = $(".dataOut");
-        $dataOut.val('');
-        get_data(_data_in, run_results)
-    }
-
-    function run_results(error, data){
-        if (error){
-            $dataOut.val(JSON.stringify(error.xhr, null, '\t'));
-            $('.error_message').text('Error: ' + error.thrownError);
-        }
-        else {
-            $dataOut.val(JSON.stringify(data.data, null, '\t'));
-            $('.dataOutHeaders').val(data.request.getAllResponseHeaders());
-
-            if (data.data.code === 'd.ad.03'){ //session cookie setup
-                var t = getTokenValue('token');
-                $('.token_box').val(t);
-                set_token(t);
+                if (data.data.code === "d.ad.03") {
+                    //session cookie setup
+                    var t = getTokenValue("token");
+                    $(".token_input").val(t);
+                    set_token(t);
+                }
             }
         }
-    }
 
-    function getTokenValue(token) {
-        var ma = document.cookie.match('(^|[^;]+)\\s*' + token + '\\s*=\\s*([^;]+)');
-        return ma ? ma.pop() : '';
-    }
-
-    function setTokenValue(name, value, days) {
-        var d = new Date;
-        d.setTime(d.getTime() + 24 * 60 * 60 * 1000 * days);
-        document.cookie = name + "=" + value + ";path=/;expires=" + d.toGMTString();
-    }
-
-    function set_token_btn(){
-        var token = $('.token_box').val();
-        setTokenValue('token', token, 1);
-        set_token(token);
-    }
-
-    function set_token(token){
-        if (!token || token.length === 0) return;
-
-        for (var i = 0; i < api_list.data.length; i++) {
-            var a = api_list.data[i];
-            if (a.data_in.token){
-                a.data_in.token = $('.token_box').val();
-            }
+        function getTokenValue(token) {
+            var ma = document.cookie.match(
+                "(^|[^;]+)\\s*" + token + "\\s*=\\s*([^;]+)"
+            );
+            return ma ? ma.pop() : "";
         }
-        $('.set_token').notify("Token set", {
-            position: "bottom left",
-            className: "success",
-            autoHideDelay: 1500,
-            showDuration: 100,
-            hideDuration: 100,
-        });
-    }
 
-    function copy(el,source) {
-        var text = $(el).val();
-        var c = document.createElement('input');
-        c.setAttribute('type', 'text');
-        c.setAttribute('value', text);
-        c.setAttribute('style', 'visibility: none;');
-        c = document.body.appendChild(c);
-        c.select();
-        try {
-            document.execCommand('copy');
-            $(source).notify("Copied",{
+        function setTokenValue(name, value, days) {
+            var d = new Date();
+            d.setTime(d.getTime() + 24 * 60 * 60 * 1000 * days);
+            document.cookie =
+                name + "=" + value + ";path=/;expires=" + d.toGMTString();
+        }
+
+        function set_token_btn() {
+            var token = $(".token_box").val();
+            setTokenValue("token", token, 1);
+            set_token(token);
+        }
+
+        function set_token(token) {
+            if (!token || token.length === 0) return;
+
+            for (var i = 0; i < api_list.data.length; i++) {
+                var a = api_list.data[i];
+                if (a.data_in.token) {
+                    a.data_in.token = $(".token_input").val();
+                }
+            }
+            $(".set_token").notify("Token set", {
                 position: "bottom left",
-                autoHideDelay: 700,
                 className: "success",
+                autoHideDelay: 1500,
                 showDuration: 100,
-                hideDuration: 100,
+                hideDuration: 100
             });
-        } catch (e) {
-        } finally {
-            c.parentNode.removeChild(c);
         }
-    }
 
+        function copy(el, source) {
+            var text = $(el).val();
+            var c = document.createElement("input");
+            c.setAttribute("type", "text");
+            c.setAttribute("value", text);
+            c.setAttribute("style", "visibility: none;");
+            c = document.body.appendChild(c);
+            c.select();
+            try {
+                document.execCommand("copy");
+                $(source).notify("Copied", {
+                    position: "bottom left",
+                    autoHideDelay: 700,
+                    className: "success",
+                    showDuration: 100,
+                    hideDuration: 100
+                });
+            } catch (e) {
+            } finally {
+                c.parentNode.removeChild(c);
+            }
+        }
     </script>
-    </body>
+</body>
+
 </html>

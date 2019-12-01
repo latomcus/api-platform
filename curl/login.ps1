@@ -1,5 +1,5 @@
 $data = @{"action"="user.create";
-    "params" = @{
+    "payload" = @{
         "email" = "test2@test1.com";
         "password" = "test123456"
     };
