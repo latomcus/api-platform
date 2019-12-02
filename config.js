@@ -6,7 +6,7 @@ module.exports = {
 
     worker_count: null, //Default: null (not set). Minimum value: 1, Maximum: number of CPUs
 
-    port: 3000, //port on which API is listening
+    port: 3000, //port on which API is listening. http://localhost:3000/
 
     ssl: {
         enabled: false,
