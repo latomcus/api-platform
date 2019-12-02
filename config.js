@@ -1,25 +1,31 @@
 /*
 https://github.com/latomcus/api-platform
-
-Contains settings for port, database, etc
 */
 
-'use strict';
 module.exports = {
 
-    port: 3000,
+    port: 3000, //port on which API is listening
+
+    ssl: {
+        enabled: false,
+        cert: './server.cert', //self-signed certificate file name
+        key: './server.key', //private key of the certificate file name
+    },
+    
+    not_authorized_message: 'Not authorized. Contact system admin support@company.com or call 000-000-0000',
+
     files: 'files', //folder where uploded files are stored
 
     data_source: 'mssql', //Options: 'mssql' or 'postgres' or 'mysql'
 
     security: [
         {
-            app_key: 'Hk3v7xjLBtkPrMh45EPDGEm26FD2k64MJA2pPvStvN',
-            permissions: ['list apis', 'upload files', 'send email','session.create']
+            app_key: 'Hk3v7xjLBtkPrMh45EPDGEm26FD2k64MJA2pPvStvN', //A-Zz-z0-9
+            permissions: ['list apis', 'ping', 'hello world', 'upload files', 'send email','session.create']
 
         },
         {
-            app_key: 'b%W$aLra*S87o5gS^svTe!npXsmx2f',
+            app_key: 'ICprYKkB9u8iJPzcLefGuFRkypcUJQanY0LowHGsq1', //A-Zz-z0-9
             permissions: ['send email']
         },
 
@@ -43,8 +49,8 @@ module.exports = {
 
     sms: {
         enabled: false,
-        //Tested integration with https://www.twilio.com
-        phone_number: '1234567890', //phone number linked in your 
+        //Integration with https://www.twilio.com
+        phone_number: '1234567890', //phone number linked in your account
         account_sid: 'AC account number', //provided by twilio
         auth_token: 'authorization token', //provided by twilio
     },
