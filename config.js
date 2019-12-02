@@ -12,7 +12,7 @@ module.exports = {
         key: './server.key', //private key of the certificate file name
     },
     
-    not_authorized_message: 'Not authorized. Contact system admin support@company.com or call 000-000-0000',
+    not_authorized_message: 'Not authorized. Contact support@company.com or call 000-000-0000',
 
     files: 'files', //folder where uploded files are stored
 
@@ -20,13 +20,13 @@ module.exports = {
 
     security: [
         {
-            app_key: 'Hk3v7xjLBtkPrMh45EPDGEm26FD2k64MJA2pPvStvN', //A-Zz-z0-9
+            app_key: 'Hk3v7xjLBtkPrMh45EPDGEm26FD2k64MJA2pPvStvN', //A-Za-z0-9
             permissions: ['list apis', 'ping', 'hello world', 'upload files', 'send email','session.create']
 
         },
         {
-            app_key: 'ICprYKkB9u8iJPzcLefGuFRkypcUJQanY0LowHGsq1', //A-Zz-z0-9
-            permissions: ['send email']
+            app_key: 'ICprYKkB9u8iJPzcLefGuFRkypcUJQanY0LowHGsq1', //A-Za-z0-9
+            permissions: ['list apis', 'send email']
         },
 
     ],
@@ -37,6 +37,15 @@ module.exports = {
         max_size: 10000, //max number of object to keep in memory cache
         default_expiration: 'absolute', //Options: 'absolute' or 'sliding'
         default_duration: 60, //in minutes
+    },
+
+    redshift: {
+        enabled: true,
+        user: 'user',
+        database: 'database',
+        password: 'password',
+        port: 'port',
+        host: 'host',
     },
 
     email: {

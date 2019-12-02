@@ -187,7 +187,7 @@
             color: #e40000;
         }
 
-        .token_box {
+        .token_input, .app_key_input {
             background-color: #fafafa;
             color: #79797b;
         }
@@ -223,7 +223,7 @@
                         <div class="col">
                             <div class="input-group input-group-sm sb_set_box">
                                 <input type="text" class="form-control app_key_input" placeholder="Enter APP key"
-                                    aria-describedby="basic-addon" value="Hk3v7xjLBtkPrMh45EPDGEm26FD2k64MJA2pPvStvN" />
+                                    aria-describedby="basic-addon" />
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary sb_set_btns set_app_key" type="button" id="button-addon2"
                                         onclick="set_app_key_btn();">Set APP Key</button>
@@ -260,7 +260,16 @@
         {{/each}}
       </script>
 
-        <script id="apis-template" type="text/x-handlebars-template">
+      <script id="error-template" type="text/x-handlebars-template">
+        <div class="row">
+            <div class="col-12">
+                {{message}}<br>
+                Make sure you have valid APP Key and system administrator granted permissions for "list apis" action.
+            </div>
+        </div>
+      </script>
+
+      <script id="apis-template" type="text/x-handlebars-template">
         <div class='box'>
             <div class="card">
                 <div class="card-body">
@@ -296,8 +305,9 @@
       </script>
 
         <script id="partial_footer" type="text/x-handlebars-template">
-        <span>&copy; Copyright {{#global 'global'}}{{year}}{{/global}}</span>, API Platform
+        <span>&copy; {{#global 'global'}}{{year}}{{/global}}</span>, API Platform
       </script>
+
     </div>
 
     <script>
@@ -330,6 +340,10 @@
         Handlebars.registerPartial("partial_footer", sourcePartial);
 
         $(function () {
+            var ak = getCookieValue("app_key");
+            if (ak && ak.length > 0) {
+                $(".app_key_input").val(ak);
+            }
             get_data(JSON.parse('{"action":"list apis"}'), load_apis);
         });
 
@@ -358,14 +372,21 @@
         }
 
         function load_apis(error, _apis_list) {
+            if (_apis_list.data.code === 'w.0.02'){
+                var tScript = $("#error-template").html();
+                var template = Handlebars.compile(tScript);
+                var c = template(_apis_list.data);
+                $(".domain-placeholder").html(c);
+                return;
+            }
+
             api_list = { data: sortByKey(_apis_list.data, "title") };
             var tScript = $("#apis-domain").html();
             var template = Handlebars.compile(tScript);
-
             var c = template(api_list);
             $(".domain-placeholder").html(c);
 
-            var t = getTokenValue("token");
+            var t = getCookieValue("token");
             $(".token_input").val(t);
             set_token(t);
         }
@@ -389,7 +410,6 @@
         }
 
         function run_results(error, data) {
-            //console.log(data);
             if (error) {
                 $dataOut.val(JSON.stringify(error.xhr, null, "\t"));
                 $(".error_message").text("Error: " + error.thrownError);
@@ -399,21 +419,21 @@
 
                 if (data.data.code === "d.ad.03") {
                     //session cookie setup
-                    var t = getTokenValue("token");
+                    var t = getCookieValue("token");
                     $(".token_input").val(t);
                     set_token(t);
                 }
             }
         }
 
-        function getTokenValue(token) {
+        function getCookieValue(cookie) {
             var ma = document.cookie.match(
-                "(^|[^;]+)\\s*" + token + "\\s*=\\s*([^;]+)"
+                "(^|[^;]+)\\s*" + cookie + "\\s*=\\s*([^;]+)"
             );
             return ma ? ma.pop() : "";
         }
 
-        function setTokenValue(name, value, days) {
+        function setCookieValue(name, value, days) {
             var d = new Date();
             d.setTime(d.getTime() + 24 * 60 * 60 * 1000 * days);
             document.cookie =
@@ -421,9 +441,23 @@
         }
 
         function set_token_btn() {
-            var token = $(".token_box").val();
-            setTokenValue("token", token, 1);
+            var token = $(".token_input").val();
+            setCookieValue("token", token, 1);
             set_token(token);
+        }
+
+        function set_app_key_btn() {
+            var token = $(".app_key_input").val();
+            setCookieValue("app_key", token, 1);
+            
+            $(".set_app_key").notify("APP Key set", {
+                position: "left",
+                className: "success",
+                autoHideDelay: 1500,
+                showDuration: 100,
+                hideDuration: 100
+            });
+            get_data(JSON.parse('{"action":"list apis"}'), load_apis);
         }
 
         function set_token(token) {
@@ -436,7 +470,7 @@
                 }
             }
             $(".set_token").notify("Token set", {
-                position: "bottom left",
+                position: "left",
                 className: "success",
                 autoHideDelay: 1500,
                 showDuration: 100,
