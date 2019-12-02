@@ -22,7 +22,7 @@ insert into users (email,password) select 'test@test.com','password';
 drop procedure if exists process;
 delimiter $
 create procedure process
-(token varchar(60),action varchar(200),params JSON)
+(token varchar(60),action varchar(200),payload JSON)
 begin
 	-- add business logic here
     

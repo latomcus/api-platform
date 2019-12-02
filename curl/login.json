@@ -1,6 +1,6 @@
 {
 	"action": "user.create",
-	"params": {
+	"payload": {
 		"email": "some_user@company.com",
 		"password": "1234567"
     },

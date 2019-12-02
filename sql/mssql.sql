@@ -67,7 +67,7 @@ if object_id('service.audit') is null
 	created_on datetime not null default getdate(),
 	[token] varchar(60) null,
 	[action] varchar(200) not null,
-	params nvarchar(max) null,
+	payload nvarchar(max) null,
 	code varchar(10) null,
 	error_number varchar(20) null,
 	error_message varchar(500) null,
@@ -84,7 +84,7 @@ create or alter procedure [service].[data_out]
 @code varchar(10),@message varchar(200),@data nvarchar(max)=NULL,
 	@actions nvarchar(max)=null
 /*
-exec service.process @action='user.create',@params=N'{"email":"some_email7@company.com","password":"1234567"}'
+exec service.process @action='user.create',@payload=N'{"email":"some_email7@company.com","password":"1234567"}'
 exec service.process
 */
 as
@@ -126,17 +126,17 @@ execute service.data_out @code='d.d.01',@message='Documentation',@data=@data
 GO
 
 create or alter procedure [service].[session_create]
-@params nvarchar(max)=null
+@payload nvarchar(max)=null
 /*
 sample:
-exec service.process @action='session.create',@params=N'{"email":"some_email@company.com","password":"1234567"}'
+exec service.process @action='session.create',@payload=N'{"email":"some_email@company.com","password":"1234567"}'
 
 */
 as
 declare @user_id int,@email nvarchar(50)='',@password nvarchar(50)='',@data nvarchar(500),@actions nvarchar(max)
 
 --parse input
-select @email=email,@password=[password] from OpenJson(@params) with (email nvarchar(50) '$.email',[password] nvarchar(50) '$.password')
+select @email=email,@password=[password] from OpenJson(@payload) with (email nvarchar(50) '$.email',[password] nvarchar(50) '$.password')
 
 --validate email
 if (len(@email)<5 or @email is null) begin --minimum email is: a@b.c
@@ -223,8 +223,8 @@ as
 set nocount on
 
 declare @tests table (id int identity(0,1),description varchar(200),token varchar(100),action varchar(200),
-	params nvarchar(max),expected_code varchar(50),received_code varchar(50),duration int)
-insert @tests (description,token,action,params,expected_code)
+	payload nvarchar(max),expected_code varchar(50),received_code varchar(50),duration int)
+insert @tests (description,token,action,payload,expected_code)
 values
 	--no action
 	('no action','',null,null,'d.p.01'),
@@ -279,15 +279,15 @@ values
 
 --run tests
 --declare @sink table (data nvarchar(max))
-declare @c int,@m int,@token varchar(60),@action varchar(200),@params nvarchar(max),@code varchar(50),@duration int
+declare @c int,@m int,@token varchar(60),@action varchar(200),@payload nvarchar(max),@code varchar(50),@duration int
 	,@sink nvarchar(max)
 select @c=0,@m=max(id) from @tests --init variables
 while @c<=@m begin --loop through all tests
 	--delete from @sink --prepare temp response storage
-	select @token=token,@action=action,@params=params,@code=null from @tests where id=@c --get details
-	print convert(varchar(10),@c) + ' > ' + isnull(@action,' - ') + ' = ' + isnull(@params,' - ')
-	--select @sink=service.process @token=@token,@action=@action,@params=@params
-	--insert @sink execute service.process @token=@token,@action=@action,@params=@params --execute
+	select @token=token,@action=action,@payload=payload,@code=null from @tests where id=@c --get details
+	print convert(varchar(10),@c) + ' > ' + isnull(@action,' - ') + ' = ' + isnull(@payload,' - ')
+	--select @sink=service.process @token=@token,@action=@action,@payload=@payload
+	--insert @sink execute service.process @token=@token,@action=@action,@payload=@payload --execute
 	--select @code=JSON_VALUE(data,'$.code'),@duration=JSON_VALUE(data,'$.duration') from @sink --extract code, duration
 	update @tests set received_code=@code,duration=@duration where id=@c --update code, duration
 	set @c=@c+1 --increment
@@ -302,7 +302,7 @@ select @status='Error' from @tests where expected_code!=received_code
 --select @status as status
 select case when expected_code=received_code then 'Ok' else 'Error' end as functional,
 	case when duration>@acceptable_performance then 'slow' else '' end as performance,
-	description,action,token,params,expected_code,received_code,duration
+	description,action,token,payload,expected_code,received_code,duration
 	from @tests
 -- execute service.test
 
@@ -315,19 +315,19 @@ select * from dbo.sessions
 GO
 
 CREATE or alter procedure [service].[user_create]
-@token varchar(60)=null,@params nvarchar(max)=null
+@token varchar(60)=null,@payload nvarchar(max)=null
 /*
 sample:
-exec service.process @action='user.create',@params=N'{"email":"some_email@company.com","password":"1234567"}'
+exec service.process @action='user.create',@payload=N'{"email":"some_email@company.com","password":"1234567"}'
 
 --performance testing, service procedure
 set nocount on
-declare @cnt int=0,@params varchar(200)
+declare @cnt int=0,@payload varchar(200)
 declare @sink table (data varchar(1000))
 while 1=1 begin
 	--delete from @sink
-	select @params='{"email":"user_' + convert(varchar,@cnt)+'@company.com","password":"1234567"}',@cnt=@cnt+1
-	insert @sink exec service.process @action='user.create',@params=@params
+	select @payload='{"email":"user_' + convert(varchar,@cnt)+'@company.com","password":"1234567"}',@cnt=@cnt+1
+	insert @sink exec service.process @action='user.create',@payload=@payload
 	if @cnt>100000 return
 end
 --duration: 1:06
@@ -353,7 +353,7 @@ as
 declare @email nvarchar(50)='',@password nvarchar(50)='',@data nvarchar(500),@actions nvarchar(max)
 
 --parse input
-select @email=email,@password=password from OpenJson(@params) with (email nvarchar(50) '$.email',password nvarchar(50) '$.password')
+select @email=email,@password=password from OpenJson(@payload) with (email nvarchar(50) '$.email',password nvarchar(50) '$.password')
 
 --validate email
 if (len(@email)<5 or @email is null) begin --minimum email is: a@b.c
@@ -386,10 +386,10 @@ execute service.data_out @code='d.aa.03',@message='Account created',@data=@data,
 GO
 
 create or alter procedure [service].[user_delete]
-@token varchar(60)=null,@params nvarchar(max)=null
+@token varchar(60)=null,@payload nvarchar(max)=null
 /*
 sample:
-exec service.process @token='FFC9B676-44E9-4A1D-9DAB-24280601FDBF',@action='user.delete',@params=N'{"email":"some_email@company.com"}'
+exec service.process @token='FFC9B676-44E9-4A1D-9DAB-24280601FDBF',@action='user.delete',@payload=N'{"email":"some_email@company.com"}'
 */
 as
 declare @email nvarchar(50)='',@user_id int,@actions nvarchar(max)
@@ -399,7 +399,7 @@ if @token is null or len(@token)!=36 begin
 	execute service.data_out @code='d.ab.01',@message='Invalid security token'; return; end;
 
 --parse email input
-select @email=email from OpenJson(@params) with (email nvarchar(50) '$.email')
+select @email=email from OpenJson(@payload) with (email nvarchar(50) '$.email')
 
 --validate email
 if (len(@email)<5 or @email is null) begin --minimum email is: a@b.c
@@ -430,10 +430,10 @@ execute service.data_out @code='d.ab.05',@message='Account deleted',@actions=@ac
 GO
 
 create or alter procedure [service].[user_reset_password]
-@params nvarchar(max)=null
+@payload nvarchar(max)=null
 /*
 sample:
-exec service.process @action='user.reset_password',@params=N'{"email":"some_email@company.com"}'
+exec service.process @action='user.reset_password',@payload=N'{"email":"some_email@company.com"}'
 
 debug:
 select * from dbo.users;
@@ -442,7 +442,7 @@ as
 declare @email nvarchar(50)='',@user_id int,@actions nvarchar(max)
 
 --parse input
-select @email=email from OpenJson(@params) with (email nvarchar(50) '$.email')
+select @email=email from OpenJson(@payload) with (email nvarchar(50) '$.email')
 
 --validate email
 if (len(@email)<5 or @email is null) begin --minimum email is: a@b.c
@@ -471,7 +471,7 @@ execute service.data_out @code='d.ac.03',@message='Password reset',@actions=@act
 GO
 
 create or alter procedure [service].[process]
-@token varchar(60)=null,@action varchar(200)=null,@params nvarchar(max)=null
+@token varchar(60)=null,@action varchar(200)=null,@payload nvarchar(max)=null
 /*
 Role: routing, error handling
 */
@@ -483,12 +483,12 @@ if @action is null begin exec service.documentation; return; end
 --handle actions
 begin try
 	--for user
-	if @action='user.create' begin exec service.user_create @params=@params; return; end
-	if @action='user.delete' begin exec service.user_delete @token=@token,@params=@params; return; end
-	if @action='user.reset_password' begin exec service.user_reset_password @params=@params; return; end
+	if @action='user.create' begin exec service.user_create @payload=@payload; return; end
+	if @action='user.delete' begin exec service.user_delete @token=@token,@payload=@payload; return; end
+	if @action='user.reset_password' begin exec service.user_reset_password @payload=@payload; return; end
 
 	--for session
-	if @action='session.create' begin exec service.session_create @params=@params; return; end
+	if @action='session.create' begin exec service.session_create @payload=@payload; return; end
 	if @action='session.is_valid' begin exec service.session_is_valid @token=@token; return; end
 	if @action='session.delete' begin exec service.session_delete @token=@token; return; end
 
@@ -499,8 +499,8 @@ begin try
 end try
 
 begin catch
-	insert service.audit(token,[action],params,code,[error_number],[error_message])
-	select @token,@action,@params,'0',error_number(),error_message()
+	insert service.audit(token,[action],payload,code,[error_number],[error_message])
+	select @token,@action,@payload,'0',error_number(),error_message()
 
 	execute service.data_out @code='d.p.02',@message='Error'
 end catch
