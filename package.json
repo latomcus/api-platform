@@ -25,7 +25,9 @@
     "pg": "^7.11.0",
     "randomstring": "^1.1.5",
     "response-time": "^2.3.2",
-    "twilio": "^3.33.2"
+    "twilio": "^3.33.2",
+    "unzip": "^0.1.11",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {}
 }

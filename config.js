@@ -8,6 +8,7 @@ Contains settings for port, database, etc
 module.exports = {
 
     port: 3000,
+    files: 'files', //folder where uploded files are stored
 
     data_source: 'mssql', //Options: 'mssql' or 'postgres' or 'mysql'
 
