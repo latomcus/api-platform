@@ -26,7 +26,7 @@
             margin-bottom: 5px;
         }
 
-        .api_title {
+        .api_title, .api_error_message {
             color: #d5d5d5;
         }
 
@@ -272,7 +272,7 @@
 
       <script id="error-template" type="text/x-handlebars-template">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 api_error_message">
                 {{message}}<br>
                 Make sure you have valid APP Key and system administrator granted permissions for "list apis" action.
             </div>
