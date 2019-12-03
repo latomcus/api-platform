@@ -1,0 +1,206 @@
+
+.api_button {
+    margin: 2px 0px 2px 0px;
+    padding: 1px 3px 2px 3px;
+}
+
+.api_header {
+    margin-bottom: 5px;
+}
+
+.api_title, .api_error_message {
+    color: #d5d5d5;
+}
+
+.api_card {
+    background-color: #dddddd;
+    padding: 3px 6px 5px 6px;
+}
+
+body {
+    font-family: "Tahoma";
+    font-size: 90%;
+    margin: 5px;
+    background-color: #343327;
+}
+
+html {
+    width: calc(100vw - 20px);
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus,
+textarea,
+.btn {
+    outline: none !important;
+    box-shadow: none;
+}
+
+.inputbox {
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+    background-color: -moz-field;
+    border: 1px solid #a4a4a4;
+    font: -moz-field;
+    font: -webkit-small-control;
+    padding: 2px 3px;
+    width: 100%;
+    white-space: pre-wrap;
+}
+
+.box {
+    margin: 15px 0px 0px 0px;
+}
+
+.smalltitle {
+    background-color: rgba(0, 0, 0, 0.03);
+    font-size: 10pt;
+    width: 100%;
+    padding: 2px 3px;
+    margin-top: 3px;
+}
+
+.description {
+    margin: 4px 0px 0px 0px;
+    color: #526f7d;
+}
+
+.dataOut {
+    padding: 5px 5px 1px 8px;
+    min-height: 220px;
+}
+
+.dataOutHeaders {
+    padding: 5px 5px 1px 8px;
+    min-height: 220px;
+    width: 100%;
+    font-size: 12px;
+    /* color: #959595;
+    background-color: #f3f3f3;
+    border: 0px;
+    font-size: smaller; */
+}
+
+.data_in {
+    padding: 5px 5px 1px 8px;
+    min-height: 130px;
+}
+
+.sb_btn {
+    margin-bottom: 3px;
+}
+
+.copy {
+    float: right;
+    color: darkgray;
+    cursor: pointer;
+    margin: 0px 5px 0px 0px;
+}
+
+.copy:hover {
+    text-decoration: underline;
+    color: gray;
+}
+
+.sb_operationbox {
+    margin: 20px 15px 18px 15px;
+}
+
+.sb_description_box {
+    margin-left: 10px;
+}
+
+.sb_description {
+    color: #767676;
+}
+
+.error_message {
+    margin: 0px 0px 0px 12px;
+    color: #bc2f2f;
+}
+
+.card-text {
+    vertical-align: middle;
+}
+
+.list-group-item {
+    padding: 0.5rem 0.8rem;
+}
+
+.card-body {
+    padding: 0.5rem 0rem 0.5rem 1.5rem;
+}
+
+.ap_center {
+    text-align: center;
+}
+
+.ap_color {
+    color: #438281;
+}
+
+.ap_build {
+    text-align: right;
+}
+
+.ap_nowrap {
+    white-space: nowrap;
+}
+
+.fa {
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.cc_oneline {
+    display: inline-block;
+    padding-right: 50px;
+}
+
+.cc_warning {
+    background: #f1efae;
+}
+
+.cc_error {
+    background: #eab2b7;
+}
+
+.cclog_error {
+    color: #e40000;
+}
+
+.token_input, .app_key_input {
+    background-color: #fafafa;
+    color: #79797b;
+}
+
+.img_platform {
+    vertical-align: initial;
+}
+
+.sb_execute_button {
+    margin: 6px 0px 4px 6px;
+}
+.sb_set_btns {
+    width: 110px;
+    text-align: left;
+    background-color: #ededed;
+    border-color: #c9c9c9;
+}
+.sb_set_box {
+    margin-bottom: 3px;
+}
+
+.api_card_footer {
+    background-color: transparent;
+    border-top: none;
+}
