@@ -10,9 +10,14 @@
     <title>API Platform</title>
 
     <script src="js/jquery-3.1.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
     <script src="js/notify.min.js"></script>
     <script src="js/handlebars-v4.0.5.js"></script>
     <link rel="stylesheet" type="text/css" href="css/index.css" />
@@ -21,34 +26,47 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-3 col-lg-3 api_header">
-                <h5 class="api_title">
-                    API Platform <img class="img_platform" src="images/api.gif" />
-                </h5>
-            </div>
-            <div class="col-md-6 offset-md-3 col-lg-6 offset-lg-3">
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <div class="input-group input-group-sm sb_set_box">
-                                <input type="text" class="form-control app_key_input" placeholder="enter APP key"
-                                    aria-describedby="basic-addon" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary sb_set_btns set_app_key" type="button" id="button-addon2"
-                                        onclick="set_app_key_btn();">Set APP Key</button>
-                                </div>
+            <div class="col-12 col-md-6">
+                <div class="row">
+                    <div class="col-6 col-sm-6">
+                        <h5 class="api_title">
+                            API Platform <img class="img_platform" src="images/api.gif" />
+                        </h5>
+                    </div>
+                    <div class="col-12 col-sm-12">
+                        <div class="input-group input-group-sm sb_set_box">
+                            <input type="text" class="form-control" placeholder="search"
+                                aria-describedby="basic-addon" />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary sb_set_btns" type="button" id="button-addon2"
+                                    onclick="btn();"><img src="/icons/search.svg" width="18" height="18" title="Search">
+                                    Search</button>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="input-group input-group-sm sb_set_box">
-                                <input type="text" class="form-control token_input" placeholder="enter token"
-                                    aria-describedby="basic-addon" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary sb_set_btns set_token" type="button"
-                                        id="button-addon2" onclick="set_token_btn();">Set Token</button>
-                                </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group input-group-sm sb_set_box">
+                            <input type="text" class="form-control app_key_input" placeholder="enter APP key"
+                                aria-describedby="basic-addon" />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary sb_set_btns set_app_key" type="button"
+                                    id="button-addon2" onclick="set_app_key_btn();">Set APP Key</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group input-group-sm sb_set_box">
+                            <input type="text" class="form-control token_input" placeholder="enter token"
+                                aria-describedby="basic-addon" />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary sb_set_btns set_token" type="button"
+                                    id="button-addon2" onclick="set_token_btn();">Set Token</button>
                             </div>
                         </div>
                     </div>
@@ -57,20 +75,20 @@
         </div>
         <div class="row">
             <div class="col-md-auto">
-                <div class="domain-placeholder"></div>
+                <div class="domain-placeholder api_apis_list"></div>
             </div>
         </div>
 
         <div class="content-placeholder"></div>
 
         <script id="apis-domain" type="text/x-handlebars-template">
-        {{#each data}}
+            {{#each data}}
             <button type='button' class="btn btn-sm btn-secondary api_button" onclick="showApi('{{title}}');">{{title}}</button>
         {{/each}}
       </script>
 
-      <script id="error-template" type="text/x-handlebars-template">
-        <div class="row">
+        <script id="error-template" type="text/x-handlebars-template">
+            <div class="row">
             <div class="col-12 api_error_message">
                 {{message}}<br>
                 Make sure you have valid APP Key and system administrator granted permissions for "list apis" action.
@@ -78,8 +96,8 @@
         </div>
       </script>
 
-      <script id="apis-template" type="text/x-handlebars-template">
-        <div class='box'>
+        <script id="apis-template" type="text/x-handlebars-template">
+            <div class='box'>
             <div class="card api_card">
                 <div class="card-body">
                     <h5 class="card-title">{{title}}</h5>
@@ -114,7 +132,7 @@
       </script>
 
         <script id="partial_footer" type="text/x-handlebars-template">
-        <span>&copy; {{#global 'global'}}{{year}}{{/global}}</span>, API Platform
+            <span>&copy; {{#global 'global'}}{{year}}{{/global}}</span>, API Platform
       </script>
 
     </div>
@@ -142,7 +160,9 @@
         });
 
         Handlebars.registerHelper("global", function (api_list, options) {
-            return options.fn({ year: new Date().getFullYear() });
+            return options.fn({
+                year: new Date().getFullYear()
+            });
         });
 
         var sourcePartial = $("#partial_footer").html();
@@ -164,10 +184,16 @@
                 url: "/", //or:  + $(".app_key_input").val(),
                 data: _data_in,
                 success: function (_data, _textStatus, _request) {
-                    callback(null, { data: _data, request: _request });
+                    callback(null, {
+                        data: _data,
+                        request: _request
+                    });
                 },
                 error: function (_xhr, _ajaxOptions, _thrownError) {
-                    callback({ xhr: _xhr, thrownError: _thrownError }, null);
+                    callback({
+                        xhr: _xhr,
+                        thrownError: _thrownError
+                    }, null);
                 }
             });
         }
@@ -181,7 +207,7 @@
         }
 
         function load_apis(error, _apis_list) {
-            if (_apis_list.data.code === 'w.0.02'){
+            if (_apis_list.data.code === 'w.0.02') {
                 var tScript = $("#error-template").html();
                 var template = Handlebars.compile(tScript);
                 var c = template(_apis_list.data);
@@ -189,7 +215,9 @@
                 return;
             }
 
-            api_list = { data: sortByKey(_apis_list.data, "title") };
+            api_list = {
+                data: sortByKey(_apis_list.data, "title")
+            };
             var tScript = $("#apis-domain").html();
             var template = Handlebars.compile(tScript);
             var c = template(api_list);
@@ -258,7 +286,7 @@
         function set_app_key_btn() {
             var token = $(".app_key_input").val();
             setCookieValue("app_key", token, 1);
-            
+
             $(".set_app_key").notify("APP Key set", {
                 position: "left",
                 className: "success",
@@ -304,8 +332,7 @@
                     showDuration: 100,
                     hideDuration: 100
                 });
-            } catch (e) {
-            } finally {
+            } catch (e) {} finally {
                 c.parentNode.removeChild(c);
             }
         }

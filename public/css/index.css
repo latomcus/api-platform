@@ -1,15 +1,16 @@
-
 .api_button {
     margin: 2px 0px 2px 0px;
     padding: 1px 3px 2px 3px;
 }
 
-.api_header {
-    margin-bottom: 5px;
+.api_apis_list {
+    margin-top: 10px;
 }
 
-.api_title, .api_error_message {
+.api_title,
+.api_error_message {
     color: #d5d5d5;
+    padding-bottom: 2px;
 }
 
 .api_card {
@@ -178,7 +179,8 @@ textarea,
     color: #e40000;
 }
 
-.token_input, .app_key_input {
+.token_input,
+.app_key_input {
     background-color: #fafafa;
     color: #79797b;
 }
@@ -190,12 +192,14 @@ textarea,
 .sb_execute_button {
     margin: 6px 0px 4px 6px;
 }
+
 .sb_set_btns {
     width: 110px;
     text-align: left;
     background-color: #ededed;
     border-color: #c9c9c9;
 }
+
 .sb_set_box {
     margin-bottom: 3px;
 }
