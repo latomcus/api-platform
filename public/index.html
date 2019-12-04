@@ -10,236 +10,58 @@
     <title>API Platform</title>
 
     <script src="js/jquery-3.1.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
     <script src="js/notify.min.js"></script>
     <script src="js/handlebars-v4.0.5.js"></script>
-
-    <style>
-        .api_button {
-            margin: 1px 0px 1px 0px;
-            padding: 1px 3px 2px 3px;
-        }
-
-        .api_header {
-            margin-bottom: 5px;
-        }
-
-        body {
-            font-family: "Tahoma";
-            font-size: 90%;
-            margin: 5px;
-            /* background-color: #e2e2e2; */
-        }
-
-        html {
-            width: calc(100vw - 20px);
-        }
-
-        .btn {
-            cursor: pointer;
-        }
-
-        .btn:focus,
-        .btn:active:focus,
-        .btn.active:focus,
-        .btn.focus,
-        .btn:active.focus,
-        .btn.active.focus,
-        textarea,
-        .btn {
-            outline: none !important;
-            box-shadow: none;
-        }
-
-        .inputbox {
-            -moz-appearance: textfield;
-            -webkit-appearance: textfield;
-            background-color: -moz-field;
-            border: 1px solid #a4a4a4;
-            font: -moz-field;
-            font: -webkit-small-control;
-            padding: 2px 3px;
-            width: 100%;
-            white-space: pre-wrap;
-        }
-
-        .box {
-            margin: 15px 0px 0px 0px;
-        }
-
-        .smalltitle {
-            background-color: rgba(0, 0, 0, 0.03);
-            font-size: 10pt;
-            width: 100%;
-            padding: 2px 3px;
-            margin-top: 3px;
-        }
-
-        .description {
-            margin: 4px 0px 0px 0px;
-            color: #526f7d;
-        }
-
-        .dataOut {
-            padding: 5px 5px 1px 8px;
-            min-height: 200px;
-        }
-
-        .dataOutHeaders {
-            padding: 5px 5px 1px 8px;
-            min-height: 200px;
-            width: 100%;
-            font-size: 12px;
-            /* color: #959595;
-            background-color: #f3f3f3;
-            border: 0px;
-            font-size: smaller; */
-        }
-
-        .data_in {
-            padding: 5px 5px 1px 8px;
-            min-height: 130px;
-        }
-
-        .sb_btn {
-            margin-bottom: 3px;
-        }
-
-        .copy {
-            float: right;
-            color: darkgray;
-            cursor: pointer;
-            margin: 0px 5px 0px 0px;
-        }
-
-        .copy:hover {
-            text-decoration: underline;
-            color: gray;
-        }
-
-        .sb_operationbox {
-            margin: 20px 15px 18px 15px;
-        }
-
-        .sb_description_box {
-            margin-left: 10px;
-        }
-
-        .sb_description {
-            color: #767676;
-        }
-
-        .error_message {
-            margin: 0px 0px 0px 12px;
-            color: #bc2f2f;
-        }
-
-        .card-text {
-            vertical-align: middle;
-        }
-
-        .list-group-item {
-            padding: 0.5rem 0.8rem;
-        }
-
-        .card-body {
-            padding: 0.5rem 0rem 0.5rem 1.5rem;
-        }
-
-        .ap_center {
-            text-align: center;
-        }
-
-        .ap_color {
-            color: #438281;
-        }
-
-        .ap_build {
-            text-align: right;
-        }
-
-        .ap_nowrap {
-            white-space: nowrap;
-        }
-
-        .fa {
-            cursor: pointer;
-            margin-left: 5px;
-            margin-right: 5px;
-        }
-
-        .cc_oneline {
-            display: inline-block;
-            padding-right: 50px;
-        }
-
-        .cc_warning {
-            background: #f1efae;
-        }
-
-        .cc_error {
-            background: #eab2b7;
-        }
-
-        .cclog_error {
-            color: #e40000;
-        }
-
-        .token_input, .app_key_input {
-            background-color: #fafafa;
-            color: #79797b;
-        }
-
-        .img_platform {
-            vertical-align: initial;
-        }
-
-        .sb_execute_button {
-            margin: 6px 0px 4px 6px;
-        }
-        .sb_set_btns {
-            width: 110px;
-            text-align: left;
-        }
-        .sb_set_box {
-            margin-bottom: 3px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
 </head>
 
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-3 col-lg-3 api_header">
-                <h5>
-                    API Platform <img class="img_platform" src="images/api.gif" />
-                </h5>
+            <div class="col-12 col-md-6">
+                <div class="row">
+                    <div class="col-8 col-sm-8 col-md-10 api_title_area">
+                        <span class="api_title">
+                            API Platform <img class="img_platform" src="images/api.gif" />
+                        </span>
+                        <a href="/admin" target="blank" class="api_admin_link">./admin</a>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-8">
+                        <input type="search" id="search_input" class="search_input api_search_input" spellcheck="false"
+                            placeholder="search..." aria-describedby="basic-addon" />
+                        
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 offset-md-3 col-lg-6 offset-lg-3">
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <div class="input-group input-group-sm sb_set_box">
-                                <input type="text" class="form-control app_key_input" placeholder="Enter APP key"
-                                    aria-describedby="basic-addon" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary sb_set_btns set_app_key" type="button" id="button-addon2"
-                                        onclick="set_app_key_btn();">Set APP Key</button>
-                                </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group input-group-sm sb_set_box">
+                            <input type="text" class="form-control app_key_input" spellcheck="false" placeholder="app key..."
+                                aria-describedby="basic-addon" />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary sb_set_btns set_app_key" type="button"
+                                    id="button-addon2" onclick="set_app_key_btn();">Set APP Key</button>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="input-group input-group-sm sb_set_box">
-                                <input type="text" class="form-control token_input" placeholder="Enter token"
-                                    aria-describedby="basic-addon" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary sb_set_btns set_token" type="button"
-                                        id="button-addon2" onclick="set_token_btn();">Set Token</button>
-                                </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group input-group-sm sb_set_box">
+                            <input type="text" class="form-control token_input" spellcheck="false" placeholder="token..."
+                                aria-describedby="basic-addon" />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary sb_set_btns set_token" type="button"
+                                    id="button-addon3" onclick="set_token_btn();">Set Token</button>
                             </div>
                         </div>
                     </div>
@@ -248,30 +70,31 @@
         </div>
         <div class="row">
             <div class="col-md-auto">
-                <div class="domain-placeholder"></div>
+                <div class="domain-placeholder api_apis_list"></div>
             </div>
         </div>
 
         <div class="content-placeholder"></div>
 
         <script id="apis-domain" type="text/x-handlebars-template">
-        {{#each data}}
+            {{#each data}}
             <button type='button' class="btn btn-sm btn-secondary api_button" onclick="showApi('{{title}}');">{{title}}</button>
         {{/each}}
       </script>
 
-      <script id="error-template" type="text/x-handlebars-template">
-        <div class="row">
-            <div class="col-12">
+        <script id="error-template" type="text/x-handlebars-template">
+            <div class="row">
+            <div class="col-12 api_error_message">
                 {{message}}<br>
                 Make sure you have valid APP Key and system administrator granted permissions for "list apis" action.
             </div>
         </div>
       </script>
 
-      <script id="apis-template" type="text/x-handlebars-template">
-        <div class='box'>
-            <div class="card">
+        <script id="apis-template" type="text/x-handlebars-template">
+            <div class='box'>
+            <div class="card api_card">
+                <div class="api_close_box" onclick='close_box(this);'>close</div>
                 <div class="card-body">
                     <h5 class="card-title">{{title}}</h5>
                     <p class="card-text text-secondary">{{description}}</p>
@@ -299,13 +122,14 @@
                     </div>
                 </div>
 
-                <div class="card-footer"><small class="text-muted">{{> partial_footer}}</small></div>
+                <div class="card-footer api_card_footer"><small class="text-muted">{{> partial_footer}}</small></div>
             </div>
         </div>
       </script>
 
         <script id="partial_footer" type="text/x-handlebars-template">
-        <span>&copy; {{#global 'global'}}{{year}}{{/global}}</span>, API Platform
+            <span>&copy; {{#global 'global'}}{{year}}{{/global}}</span>
+            <a class='api_github_link' href="https://github.com/latomcus/api-platform" target="blank">API Platform</a>
       </script>
 
     </div>
@@ -333,7 +157,9 @@
         });
 
         Handlebars.registerHelper("global", function (api_list, options) {
-            return options.fn({ year: new Date().getFullYear() });
+            return options.fn({
+                year: new Date().getFullYear()
+            });
         });
 
         var sourcePartial = $("#partial_footer").html();
@@ -355,10 +181,16 @@
                 url: "/", //or:  + $(".app_key_input").val(),
                 data: _data_in,
                 success: function (_data, _textStatus, _request) {
-                    callback(null, { data: _data, request: _request });
+                    callback(null, {
+                        data: _data,
+                        request: _request
+                    });
                 },
                 error: function (_xhr, _ajaxOptions, _thrownError) {
-                    callback({ xhr: _xhr, thrownError: _thrownError }, null);
+                    callback({
+                        xhr: _xhr,
+                        thrownError: _thrownError
+                    }, null);
                 }
             });
         }
@@ -371,8 +203,12 @@
             });
         }
 
+        function close_box(){
+            $(".content-placeholder").empty();
+        }
+
         function load_apis(error, _apis_list) {
-            if (_apis_list.data.code === 'w.0.02'){
+            if (_apis_list.data.code === 'w.0.02') {
                 var tScript = $("#error-template").html();
                 var template = Handlebars.compile(tScript);
                 var c = template(_apis_list.data);
@@ -380,7 +216,9 @@
                 return;
             }
 
-            api_list = { data: sortByKey(_apis_list.data, "title") };
+            api_list = {
+                data: sortByKey(_apis_list.data, "title")
+            };
             var tScript = $("#apis-domain").html();
             var template = Handlebars.compile(tScript);
             var c = template(api_list);
@@ -440,6 +278,30 @@
                 name + "=" + value + ";path=/;expires=" + d.toGMTString();
         }
 
+        document.getElementById("search_input").addEventListener("search", function(event) {
+            //console.log('empty');
+            $(".search_input").empty();
+        });
+
+        $(".search_input").keypress(function(e) {
+            //console.log(e.which);
+            if (e.which == 13){
+                search_btn();
+            }
+        });
+
+        $(".search_input").on('input', function() {
+            search_btn();
+        });
+
+        function search_btn(){
+            var r = {
+                "action": "list apis",
+                "payload": { "filter": $(".search_input").val() }
+            };
+            get_data(r, load_apis);
+        }
+
         function set_token_btn() {
             var token = $(".token_input").val();
             setCookieValue("token", token, 1);
@@ -449,7 +311,7 @@
         function set_app_key_btn() {
             var token = $(".app_key_input").val();
             setCookieValue("app_key", token, 1);
-            
+
             $(".set_app_key").notify("APP Key set", {
                 position: "left",
                 className: "success",
@@ -495,8 +357,7 @@
                     showDuration: 100,
                     hideDuration: 100
                 });
-            } catch (e) {
-            } finally {
+            } catch (e) {} finally {
                 c.parentNode.removeChild(c);
             }
         }

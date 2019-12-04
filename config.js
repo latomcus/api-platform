@@ -4,7 +4,9 @@ https://github.com/latomcus/api-platform
 
 module.exports = {
 
-    port: 3000, //port on which API is listening
+    worker_count: null, //Default: null (not set). Minimum value: 1, Maximum: number of CPUs
+
+    port: 3000, //port on which API is listening. http://localhost:3000/
 
     ssl: {
         enabled: false,
@@ -21,8 +23,11 @@ module.exports = {
     security: [
         {
             app_key: 'Hk3v7xjLBtkPrMh45EPDGEm26FD2k64MJA2pPvStvN', //A-Za-z0-9
-            permissions: ['list apis', 'ping', 'hello world', 'upload files', 'send email','session.create']
-
+            permissions: [
+                'user.create','session.create','session.delete','session.is_valid','user.delete','user.reset_password',
+                'list apis', 'ping', 'hello world', 'upload files', 'send email',
+                'cache.status','cache.add','cache.remove'
+            ]
         },
         {
             app_key: 'ICprYKkB9u8iJPzcLefGuFRkypcUJQanY0LowHGsq1', //A-Za-z0-9
