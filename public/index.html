@@ -28,21 +28,16 @@
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="row">
-                    <div class="col-6 col-sm-6">
-                        <h5 class="api_title">
+                    <div class="col-8 col-sm-8 col-md-10 api_title_area">
+                        <span class="api_title">
                             API Platform <img class="img_platform" src="images/api.gif" />
-                        </h5>
+                        </span>
+                        <a href="/admin" target="blank" class="api_admin_link">./admin</a>
                     </div>
-                    <div class="col-12 col-sm-12">
-                        <div class="input-group input-group-sm sb_set_box">
-                            <input type="text" class="form-control" placeholder="search"
-                                aria-describedby="basic-addon" />
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary sb_set_btns" type="button" id="button-addon2"
-                                    onclick="btn();"><img src="/icons/search.svg" width="18" height="18" title="Search">
-                                    Search</button>
-                            </div>
-                        </div>
+                    <div class="col-12 col-sm-12 col-md-8">
+                        <input type="search" id="search_input" class="search_input api_search_input" spellcheck="false"
+                            placeholder="search..." aria-describedby="basic-addon" />
+                        
                     </div>
                 </div>
             </div>
@@ -50,7 +45,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="input-group input-group-sm sb_set_box">
-                            <input type="text" class="form-control app_key_input" placeholder="enter APP key"
+                            <input type="text" class="form-control app_key_input" spellcheck="false" placeholder="app key..."
                                 aria-describedby="basic-addon" />
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary sb_set_btns set_app_key" type="button"
@@ -62,11 +57,11 @@
                 <div class="row">
                     <div class="col">
                         <div class="input-group input-group-sm sb_set_box">
-                            <input type="text" class="form-control token_input" placeholder="enter token"
+                            <input type="text" class="form-control token_input" spellcheck="false" placeholder="token..."
                                 aria-describedby="basic-addon" />
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary sb_set_btns set_token" type="button"
-                                    id="button-addon2" onclick="set_token_btn();">Set Token</button>
+                                    id="button-addon3" onclick="set_token_btn();">Set Token</button>
                             </div>
                         </div>
                     </div>
@@ -99,6 +94,7 @@
         <script id="apis-template" type="text/x-handlebars-template">
             <div class='box'>
             <div class="card api_card">
+                <div class="api_close_box" onclick='close_box(this);'>close</div>
                 <div class="card-body">
                     <h5 class="card-title">{{title}}</h5>
                     <p class="card-text text-secondary">{{description}}</p>
@@ -132,7 +128,8 @@
       </script>
 
         <script id="partial_footer" type="text/x-handlebars-template">
-            <span>&copy; {{#global 'global'}}{{year}}{{/global}}</span>, API Platform
+            <span>&copy; {{#global 'global'}}{{year}}{{/global}}</span>
+            <a class='api_github_link' href="https://github.com/latomcus/api-platform" target="blank">API Platform</a>
       </script>
 
     </div>
@@ -206,6 +203,10 @@
             });
         }
 
+        function close_box(){
+            $(".content-placeholder").empty();
+        }
+
         function load_apis(error, _apis_list) {
             if (_apis_list.data.code === 'w.0.02') {
                 var tScript = $("#error-template").html();
@@ -275,6 +276,30 @@
             d.setTime(d.getTime() + 24 * 60 * 60 * 1000 * days);
             document.cookie =
                 name + "=" + value + ";path=/;expires=" + d.toGMTString();
+        }
+
+        document.getElementById("search_input").addEventListener("search", function(event) {
+            //console.log('empty');
+            $(".search_input").empty();
+        });
+
+        $(".search_input").keypress(function(e) {
+            //console.log(e.which);
+            if (e.which == 13){
+                search_btn();
+            }
+        });
+
+        $(".search_input").on('input', function() {
+            search_btn();
+        });
+
+        function search_btn(){
+            var r = {
+                "action": "list apis",
+                "payload": { "filter": $(".search_input").val() }
+            };
+            get_data(r, load_apis);
         }
 
         function set_token_btn() {

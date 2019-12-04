@@ -1,3 +1,59 @@
+.card-footer {
+    padding: 0px;
+}
+
+.api_github_link {
+    cursor: pointer;
+    color: #6c757d;
+}
+
+.api_github_link:hover {
+    text-decoration: underline;
+    color: #78c3ff;
+}
+
+.api_close_box {
+    position: absolute;
+    right: 0px;
+    color: darkgray;
+    cursor: pointer;
+    margin: 0px 10px 0px 0px;
+}
+
+.api_close_box:hover {
+    text-decoration: underline;
+    color: gray;
+}
+
+.api_admin_link {
+    margin: 0px 0px 0px 16px;
+    color: #929494;
+    font-size: 1.25rem;
+}
+
+.api_admin_link:hover {
+    text-decoration: none;
+    color: #78c3ff;
+}
+
+.api_title_area {
+    margin: 0px 0px 5px 0px;
+}
+
+.api_settings_icon {
+    width: 30px;
+    height: 30px;
+}
+.api_search_input {
+    border-radius: 13px;
+    padding: 0px 11px 0px 11px;
+    background-color: #ebebd8;
+    height: 30px;
+    width: 100%;
+    border: none;
+    margin: 0px 0px 3px 0px;
+}
+
 .api_button {
     margin: 2px 0px 2px 0px;
     padding: 1px 3px 2px 3px;
@@ -7,7 +63,11 @@
     margin-top: 10px;
 }
 
-.api_title,
+.api_title {
+    color: #d5d5d5;
+    font-size: 1.25rem;
+}
+
 .api_error_message {
     color: #d5d5d5;
     padding-bottom: 2px;
@@ -39,7 +99,7 @@ html {
 .btn.focus,
 .btn:active.focus,
 .btn.active.focus,
-textarea,
+textarea, input,
 .btn {
     outline: none !important;
     box-shadow: none;
@@ -76,18 +136,15 @@ textarea,
 
 .dataOut {
     padding: 5px 5px 1px 8px;
-    min-height: 220px;
+    min-height: 180px;
 }
 
 .dataOutHeaders {
     padding: 5px 5px 1px 8px;
-    min-height: 220px;
+    min-height: 180px;
     width: 100%;
     font-size: 12px;
-    /* color: #959595;
-    background-color: #f3f3f3;
-    border: 0px;
-    font-size: smaller; */
+    color: #717171;
 }
 
 .data_in {
