@@ -38,7 +38,7 @@ end; $$ language plpgsql;
 
 -- 7. Create role, user, and grant permissions. Execute one line at a time
 create role api_user_role;
-grant execute on function process(varchar(60),varchar(200),JSON,out JSON) to api_user_role;
+grant execute on function service.process(varchar(60),varchar(200),JSON,out JSON) to api_user_role;
 grant usage on schema public,service to api_user_role;
 grant all on all tables in schema public,service to api_user_role;
 create user api_user with password 'secret';

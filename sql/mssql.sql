@@ -2,9 +2,9 @@
 
 /*
 	Cleanup scripts:
-	drop table dbo.sessions;
-	drop table dbo.users;
-	drop table service.audit;
+	drop table dbo.sessions
+	drop table dbo.users
+	drop table service.audit
 
 */
 
@@ -19,11 +19,11 @@ go
 
 --2. Create login
 if not exists (select name from sys.server_principals where name='api_user')
-	create login api_user with password='secret';-- enter your own secure password
+	create login api_user with password='secret'-- enter your own secure password
 	go
 
 if not exists (select name from sys.database_principals where name='api_user')
-	create user api_user for login api_user;
+	create user api_user for login api_user
 	go
 
 --3. Grant execute permissions
@@ -140,16 +140,16 @@ select @email=email,@password=[password] from OpenJson(@payload) with (email nva
 
 --validate email
 if (len(@email)<5 or @email is null) begin --minimum email is: a@b.c
-	execute service.data_out @code='d.ad.00',@message='Invalid email'; return; end;
+	execute service.data_out @code='d.ad.00',@message='Invalid email' return end
 
 --validate password
 if (len(@password)<6 or @password is null) begin --minimum password len is 6
-	execute service.data_out @code='d.ad.01',@message='Invalid password'; return; end;
+	execute service.data_out @code='d.ad.01',@message='Invalid password' return end
 
 --validate if account exists
 select @user_id=id from dbo.users where email=@email and [password]=HASHBYTES('SHA2_512', @password)
 if @user_id is null begin
-	execute service.data_out @code='d.ad.02',@message='Invalid credentials'; return; end;
+	execute service.data_out @code='d.ad.02',@message='Invalid credentials' return end
 
 --create new session
 declare @token varchar(60)=newid()
@@ -177,7 +177,7 @@ declare @actions nvarchar(max)
 
 --validate token
 if @token is null or len(@token)!=36 begin
-	execute service.data_out @code='d.af.00',@message='Invalid security token'; return; end;
+	execute service.data_out @code='d.af.00',@message='Invalid security token' return end
 
 delete dbo.[sessions] where token=@token
 
@@ -198,7 +198,7 @@ declare @user_id int,@data nvarchar(500)
 
 --validate token
 if @token is null or len(@token)!=36 begin
-	execute service.data_out @code='d.ae.00',@message='Invalid security token'; return; end;
+	execute service.data_out @code='d.ae.00',@message='Invalid security token' return end
 
 --find session
 if @token!='FFC9B676-44E9-4A1D-9DAB-24280601FDBF' begin --ignore check for test token
@@ -357,15 +357,15 @@ select @email=email,@password=password from OpenJson(@payload) with (email nvarc
 
 --validate email
 if (len(@email)<5 or @email is null) begin --minimum email is: a@b.c
-	execute service.data_out @code='d.aa.00',@message='Invalid email'; return; end;
+	execute service.data_out @code='d.aa.00',@message='Invalid email' return end
 
 --validate password
 if (len(@password)<6 or @password is null) begin --minimum password len is 6
-	execute service.data_out @code='d.a.a01',@message='Invalid password'; return; end;
+	execute service.data_out @code='d.a.a01',@message='Invalid password' return end
 
 --validate if email already exists
 if exists(select 1 from dbo.users where email=@email) begin
-	execute service.data_out @code='d.aa.02',@message='Account with this email already exists'; return; end;
+	execute service.data_out @code='d.aa.02',@message='Account with this email already exists' return end
 
 --insert new account
 declare @user_new table (id int)
@@ -396,24 +396,24 @@ declare @email nvarchar(50)='',@user_id int,@actions nvarchar(max)
 
 --validate token
 if @token is null or len(@token)!=36 begin
-	execute service.data_out @code='d.ab.01',@message='Invalid security token'; return; end;
+	execute service.data_out @code='d.ab.01',@message='Invalid security token' return end
 
 --parse email input
 select @email=email from OpenJson(@payload) with (email nvarchar(50) '$.email')
 
 --validate email
 if (len(@email)<5 or @email is null) begin --minimum email is: a@b.c
-	execute service.data_out @code='d.ab.02',@message='Invalid email'; return; end;
+	execute service.data_out @code='d.ab.02',@message='Invalid email' return end
 
 --validate if email exists
 select @user_id=id from dbo.users where email=@email
 if @user_id is null begin
-	execute service.data_out @code='d.ab.03',@message='Account with this email does not exist'; return; end;
+	execute service.data_out @code='d.ab.03',@message='Account with this email does not exist' return end
 
 --authorize
 if @token!='FFC9B676-44E9-4A1D-9DAB-24280601FDBF' begin --ignore if this is test token
 	if not exists (select 1 from dbo.sessions where token=@token and user_id=@user_id and expires>getdate()) begin
-		execute service.data_out @code='d.ab.04',@message='Invalid credentials or not autorized to delete account'; return; end;
+		execute service.data_out @code='d.ab.04',@message='Invalid credentials or not autorized to delete account' return end
 	end
 
 --delete
@@ -436,7 +436,7 @@ sample:
 exec service.process @action='user.reset_password',@payload=N'{"email":"some_email@company.com"}'
 
 debug:
-select * from dbo.users;
+select * from dbo.users
 */
 as
 declare @email nvarchar(50)='',@user_id int,@actions nvarchar(max)
@@ -446,12 +446,12 @@ select @email=email from OpenJson(@payload) with (email nvarchar(50) '$.email')
 
 --validate email
 if (len(@email)<5 or @email is null) begin --minimum email is: a@b.c
-	execute service.data_out @code='d.ac.01',@message='Invalid email'; return; end;
+	execute service.data_out @code='d.ac.01',@message='Invalid email' return end
 
 --validate if email exists
 select @user_id=id from dbo.users where email=@email
 if @user_id is null begin
-	execute service.data_out @code='d.ac.02',@message='Account with this email does not exist'; return; end;
+	execute service.data_out @code='d.ac.02',@message='Account with this email does not exist' return end
 
 --reset password
 declare @new_password nvarchar(50),@password_hash binary(64)
@@ -478,19 +478,19 @@ Role: routing, error handling
 as
 
 --show documentation
-if @action is null begin exec service.documentation; return; end
+if @action is null begin exec service.documentation return end
 
 --handle actions
 begin try
 	--for user
-	if @action='user.create' begin exec service.user_create @payload=@payload; return; end
-	if @action='user.delete' begin exec service.user_delete @token=@token,@payload=@payload; return; end
-	if @action='user.reset_password' begin exec service.user_reset_password @payload=@payload; return; end
+	if @action='user.create' begin exec service.user_create @payload=@payload return end
+	if @action='user.delete' begin exec service.user_delete @token=@token,@payload=@payload return end
+	if @action='user.reset_password' begin exec service.user_reset_password @payload=@payload return end
 
 	--for session
-	if @action='session.create' begin exec service.session_create @payload=@payload; return; end
-	if @action='session.is_valid' begin exec service.session_is_valid @token=@token; return; end
-	if @action='session.delete' begin exec service.session_delete @token=@token; return; end
+	if @action='session.create' begin exec service.session_create @payload=@payload return end
+	if @action='session.is_valid' begin exec service.session_is_valid @token=@token return end
+	if @action='session.delete' begin exec service.session_delete @token=@token return end
 
 	--add more handlers as needed
 
