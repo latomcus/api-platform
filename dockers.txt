@@ -1,0 +1,27 @@
+//mongo
+docker pull mongo
+docker run -it --name mongo-docker -p 27017:27017 -d mongo
+mongodb://127.0.0.1:27017
+
+$ mongo
+use api_database
+db.createUser(
+   {
+     user: "api_user",
+     pwd: "secret",
+     roles: [ "readWrite", "dbAdmin" ]
+   }
+)
+mongodb://api_user:secret@127.0.0.1:27017/api_database
+
+//postgres
+docker pull postgres:latest
+docker run --name pg-docker -p 5432:5432 -e POSTGRES_PASSWORD=secret -d postgres:latest
+
+//mssql
+docker pull mcr.microsoft.com/mssql/server
+docker run --name mssql-docker -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=secret!SECRET" -e "MSSQL_PID=Express" -p 1433:1433 -d mcr.microsoft.com/mssql/server
+
+
+
+

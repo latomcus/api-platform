@@ -26,12 +26,12 @@ module.exports = {
             permissions: [
                 'user.create','session.create','session.delete','session.is_valid','user.delete','user.reset_password',
                 'list apis', 'ping', 'hello world', 'upload files', 'send email',
-                'cache.status','cache.add','cache.remove'
+                'cache.status', 'cache.add', 'cache.remove', 'synch data'
             ]
         },
         {
             app_key: 'ICprYKkB9u8iJPzcLefGuFRkypcUJQanY0LowHGsq1', //A-Za-z0-9
-            permissions: ['list apis', 'send email']
+            permissions: ['list apis', 'synch data']
         },
 
     ],
@@ -42,15 +42,6 @@ module.exports = {
         max_size: 10000, //max number of object to keep in memory cache
         default_expiration: 'absolute', //Options: 'absolute' or 'sliding'
         default_duration: 60, //in minutes
-    },
-
-    redshift: {
-        enabled: true,
-        user: 'user',
-        database: 'database',
-        password: 'password',
-        port: 'port',
-        host: 'host',
     },
 
     email: {
@@ -69,16 +60,28 @@ module.exports = {
         auth_token: 'authorization token', //provided by twilio
     },
 
+    mongodb: {
+        url: 'mongodb://api_user:secret@127.0.0.1:27017'
+    },
+
+    redshift: {
+        user: 'user',
+        database: 'database',
+        password: 'password',
+        port: 'port',
+        host: 'host',
+    },
+
     mssql: {
         user: 'api_user',
-        password: 'secret',
-        server: 'COMPUTER2\\SQLEXPRESS',
+        password: 'secret!SECRET',
+        server: 'localhost',
         database: 'api_database',
         parseJSON: true,
     },
 
     postgres: {
-        connectionString: 'postgres://api_user:secret@localhost:5432/api_database',
+        connectionString: 'postgres://api_user:secret@localhost:5433/api_database',
         max: 20,
         idleTimeoutMillis: 30000,
         connectionTimeoutMillis: 2000,
